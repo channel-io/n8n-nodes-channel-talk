@@ -1,0 +1,68 @@
+{
+  "name": "n8n-nodes-channel-talk",
+  "version": "0.0.1",
+  "description": "Channel Talk n8n nodes",
+  "packageManager": "pnpm@10.28.1",
+  "license": "MIT",
+  "main": "index.js",
+  "homepage": "",
+  "keywords": [
+    "n8n-community-node-package",
+    "channel-talk",
+    "channel-io"
+  ],
+  "author": {
+    "name": "Channel Corp.",
+    "email": "eng@channel.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/channel-io/n8n-nodes-channel-talk.git"
+  },
+  "scripts": {
+    "build": "n8n-node build",
+    "build:watch": "tsc --watch",
+    "dev": "n8n-node dev",
+    "lint": "n8n-node lint",
+    "lint:fix": "n8n-node lint --fix",
+    "link:node": "pnpm build && mkdir -p ~/.n8n/custom && ln -s \"$(pwd)\" ~/.n8n/custom/n8n-nodes-channel-talk",
+    "unlink:node": "rm -f ~/.n8n/custom/n8n-nodes-channel-talk",
+    "release": "n8n-node release"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "release-it": {
+    "ci": false,
+    "github": {
+      "release": true,
+      "autoGenerate": true
+    },
+    "npm": {
+      "publish": false,
+      "skipChecks": true
+    }
+  },
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/ChannelTalkApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/ChannelTalk/ChannelTalk.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@n8n/node-cli": "*",
+    "eslint": "9.32.0",
+    "prettier": "3.6.2",
+    "release-it": "^19.0.4",
+    "typescript": "5.9.2"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
+}
