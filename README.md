@@ -20,6 +20,7 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
     - Create a new message (POST /open/v5/groups/{groupId}/messages)
 - User Chat
     - Open a user chat (PUT /open/v5/user-chats/{userChatId}/open)
+    - List user chats (GET /open/v5/user-chats)
 
 ## Credentials
 

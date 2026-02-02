@@ -1,5 +1,6 @@
 import type { INodeProperties } from 'n8n-workflow';
 import { userChatOpenDescription } from './open';
+import { userChatListDescription } from './list';
 
 const showOnlyForUserChats = {
 	resource: ['userChat'],
@@ -31,4 +32,19 @@ export const userChatDescription: INodeProperties[] = [
 		default: 'open',
 	},
 	...userChatOpenDescription,
+				name: 'List',
+				value: 'list',
+				action: 'List user chats',
+				description: 'List user chats in managed state',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '/open/v5/user-chats',
+					},
+				},
+			},
+		],
+		default: 'list',
+	},
+	...userChatListDescription,
 ];
