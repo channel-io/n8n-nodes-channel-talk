@@ -16,10 +16,12 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 
 ## Operations
 
-- **Channel**
+- Channel
   - Get: Retrieve the channel connected with your API credentials (GET /open/v5/channel)
-- **Messages**
-  - Create: Create a new message (POST /open/v5/groups/{groupId}/messages)
+- Messages
+    - Create a new message (POST /open/v5/groups/{groupId}/messages)
+- User Chat
+  - List user chats (GET /open/v5/user-chats)
 
 ## Credentials
 
