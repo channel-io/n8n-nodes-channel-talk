@@ -1,6 +1,6 @@
 # n8n-nodes-channel-talk
 
-This is an n8n community node. It lets you send Channel Talk messages in your n8n workflows.
+This is an n8n community node. It lets you work with Channel Talk in your n8n workflows: send messages and retrieve channel info.
 
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/sustainable-use-license/) workflow automation platform.
 
@@ -16,6 +16,8 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 
 ## Operations
 
+- Channel
+  - Get: Retrieve the channel connected with your API credentials (GET /open/v5/channel)
 - Messages
     - Create a new message (POST /open/v5/groups/{groupId}/messages)
 - User Chat
