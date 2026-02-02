@@ -111,113 +111,107 @@ export const userCrudDescription: INodeProperties[] = [
 		description: 'The unique identifier of the user to update',
 	},
 	{
-		displayName: 'Profile (JSON)',
-		name: 'profileJson',
-		type: 'string',
-		typeOptions: {
-			rows: 5,
-		},
-		default: '',
+		displayName: 'Update Fields',
+		name: 'updateFields',
+		type: 'collection',
+		placeholder: 'Add Field',
+		default: {},
 		displayOptions: {
 			show: showOnlyForUserUpdate,
 		},
-		description: profileDescription,
-		routing: {
-			send: {
-				type: 'body',
-				property: 'profile',
-				value: jsonParseExpression,
+		options: [
+			{
+				displayName: 'Blocked',
+				name: 'blocked',
+				type: 'boolean',
+				default: false,
+				description: 'Whether the user is blocked from sending messages',
+				routing: {
+					send: {
+						type: 'body',
+						property: 'blocked',
+					},
+				},
 			},
-		},
-	},
-	{
-		displayName: 'Profile Once (JSON)',
-		name: 'profileOnceJson',
-		type: 'string',
-		typeOptions: {
-			rows: 5,
-		},
-		default: '',
-		displayOptions: {
-			show: showOnlyForUserUpdate,
-		},
-		description: profileOnceDescription,
-		routing: {
-			send: {
-				type: 'body',
-				property: 'profileOnce',
-				value: jsonParseExpression,
+			{
+				displayName: 'Profile (JSON)',
+				name: 'profileJson',
+				type: 'string',
+				typeOptions: {
+					rows: 5,
+				},
+				default: '',
+				description: profileDescription,
+				routing: {
+					send: {
+						type: 'body',
+						property: 'profile',
+						value: jsonParseExpression,
+					},
+				},
 			},
-		},
-	},
-	{
-		displayName: 'Tags (JSON Array)',
-		name: 'tagsJson',
-		type: 'string',
-		typeOptions: {
-			rows: 3,
-		},
-		default: '',
-		displayOptions: {
-			show: showOnlyForUserUpdate,
-		},
-		description:
-			'JSON array of tag strings to assign to the user. Maximum 20 tags allowed. Non-string values will be filtered out. Example: ["vip", "premium", "active"].',
-		routing: {
-			send: {
-				type: 'body',
-				property: 'tags',
-				value: tagsJsonArrayExpression,
+			{
+				displayName: 'Profile Once (JSON)',
+				name: 'profileOnceJson',
+				type: 'string',
+				typeOptions: {
+					rows: 5,
+				},
+				default: '',
+				description: profileOnceDescription,
+				routing: {
+					send: {
+						type: 'body',
+						property: 'profileOnce',
+						value: jsonParseExpression,
+					},
+				},
 			},
-		},
-	},
-	{
-		displayName: 'Blocked',
-		name: 'blocked',
-		type: 'boolean',
-		default: false,
-		displayOptions: {
-			show: showOnlyForUserUpdate,
-		},
-		description: 'Whether the user is blocked from sending messages',
-		routing: {
-			send: {
-				type: 'body',
-				property: 'blocked',
+			{
+				displayName: 'Tags (JSON Array)',
+				name: 'tagsJson',
+				type: 'string',
+				typeOptions: {
+					rows: 3,
+				},
+				default: '',
+				description:
+					'JSON array of tag strings to assign to the user. Maximum 20 tags allowed. Non-string values will be filtered out. Example: ["vip", "premium", "active"].',
+				routing: {
+					send: {
+						type: 'body',
+						property: 'tags',
+						value: tagsJsonArrayExpression,
+					},
+				},
 			},
-		},
-	},
-	{
-		displayName: 'Unsubscribe Email',
-		name: 'unsubscribeEmail',
-		type: 'boolean',
-		default: false,
-		displayOptions: {
-			show: showOnlyForUserUpdate,
-		},
-		description: 'Whether the user has opted out of receiving marketing emails',
-		routing: {
-			send: {
-				type: 'body',
-				property: 'unsubscribeEmail',
+			{
+				displayName: 'Unsubscribe Email',
+				name: 'unsubscribeEmail',
+				type: 'boolean',
+				default: false,
+				description: 'Whether the user has opted out of receiving marketing emails',
+				routing: {
+					send: {
+						type: 'body',
+						property: 'unsubscribeEmail',
+					},
+				},
 			},
-		},
-	},
-	{
-		displayName: 'Unsubscribe Texting',
-		name: 'unsubscribeTexting',
-		type: 'boolean',
-		default: false,
-		displayOptions: {
-			show: showOnlyForUserUpdate,
-		},
-		description: 'Whether the user has opted out of receiving marketing text messages',
-		routing: {
-			send: {
-				type: 'body',
-				property: 'unsubscribeTexting',
+			{
+				displayName: 'Unsubscribe Texting',
+				name: 'unsubscribeTexting',
+				type: 'boolean',
+				default: false,
+				description: 'Whether the user has opted out of receiving marketing text messages',
+				routing: {
+					send: {
+						type: 'body',
+						property: 'unsubscribeTexting',
+					},
+				},
 			},
-		},
+		],
 	},
 	// Upsert user fields
 	{
@@ -233,113 +227,107 @@ export const userCrudDescription: INodeProperties[] = [
 			'Your service member ID. If a user with this ID exists, it will be updated; otherwise, a new user will be created.',
 	},
 	{
-		displayName: 'Profile (JSON)',
-		name: 'profileJson',
-		type: 'string',
-		typeOptions: {
-			rows: 5,
-		},
-		default: '',
+		displayName: 'Additional Fields',
+		name: 'additionalFields',
+		type: 'collection',
+		placeholder: 'Add Field',
+		default: {},
 		displayOptions: {
 			show: showOnlyForUserUpsert,
 		},
-		description: profileDescription,
-		routing: {
-			send: {
-				type: 'body',
-				property: 'profile',
-				value: jsonParseExpression,
+		options: [
+			{
+				displayName: 'Blocked',
+				name: 'blocked',
+				type: 'boolean',
+				default: false,
+				description: 'Whether the user is blocked from sending messages',
+				routing: {
+					send: {
+						type: 'body',
+						property: 'blocked',
+					},
+				},
 			},
-		},
-	},
-	{
-		displayName: 'Profile Once (JSON)',
-		name: 'profileOnceJson',
-		type: 'string',
-		typeOptions: {
-			rows: 5,
-		},
-		default: '',
-		displayOptions: {
-			show: showOnlyForUserUpsert,
-		},
-		description: profileOnceDescription,
-		routing: {
-			send: {
-				type: 'body',
-				property: 'profileOnce',
-				value: jsonParseExpression,
+			{
+				displayName: 'Profile (JSON)',
+				name: 'profileJson',
+				type: 'string',
+				typeOptions: {
+					rows: 5,
+				},
+				default: '',
+				description: profileDescription,
+				routing: {
+					send: {
+						type: 'body',
+						property: 'profile',
+						value: jsonParseExpression,
+					},
+				},
 			},
-		},
-	},
-	{
-		displayName: 'Tags (JSON Array)',
-		name: 'tagsJson',
-		type: 'string',
-		typeOptions: {
-			rows: 3,
-		},
-		default: '',
-		displayOptions: {
-			show: showOnlyForUserUpsert,
-		},
-		description:
-			'JSON array of tag strings to assign to the user. Maximum 20 tags allowed. Non-string values will be filtered out. Example: ["vip", "premium", "active"].',
-		routing: {
-			send: {
-				type: 'body',
-				property: 'tags',
-				value: tagsJsonArrayExpression,
+			{
+				displayName: 'Profile Once (JSON)',
+				name: 'profileOnceJson',
+				type: 'string',
+				typeOptions: {
+					rows: 5,
+				},
+				default: '',
+				description: profileOnceDescription,
+				routing: {
+					send: {
+						type: 'body',
+						property: 'profileOnce',
+						value: jsonParseExpression,
+					},
+				},
 			},
-		},
-	},
-	{
-		displayName: 'Blocked',
-		name: 'blocked',
-		type: 'boolean',
-		default: false,
-		displayOptions: {
-			show: showOnlyForUserUpsert,
-		},
-		description: 'Whether the user is blocked from sending messages',
-		routing: {
-			send: {
-				type: 'body',
-				property: 'blocked',
+			{
+				displayName: 'Tags (JSON Array)',
+				name: 'tagsJson',
+				type: 'string',
+				typeOptions: {
+					rows: 3,
+				},
+				default: '',
+				description:
+					'JSON array of tag strings to assign to the user. Maximum 20 tags allowed. Non-string values will be filtered out. Example: ["vip", "premium", "active"].',
+				routing: {
+					send: {
+						type: 'body',
+						property: 'tags',
+						value: tagsJsonArrayExpression,
+					},
+				},
 			},
-		},
-	},
-	{
-		displayName: 'Unsubscribe Email',
-		name: 'unsubscribeEmail',
-		type: 'boolean',
-		default: false,
-		displayOptions: {
-			show: showOnlyForUserUpsert,
-		},
-		description: 'Whether the user has opted out of receiving marketing emails',
-		routing: {
-			send: {
-				type: 'body',
-				property: 'unsubscribeEmail',
+			{
+				displayName: 'Unsubscribe Email',
+				name: 'unsubscribeEmail',
+				type: 'boolean',
+				default: false,
+				description: 'Whether the user has opted out of receiving marketing emails',
+				routing: {
+					send: {
+						type: 'body',
+						property: 'unsubscribeEmail',
+					},
+				},
 			},
-		},
-	},
-	{
-		displayName: 'Unsubscribe Texting',
-		name: 'unsubscribeTexting',
-		type: 'boolean',
-		default: false,
-		displayOptions: {
-			show: showOnlyForUserUpsert,
-		},
-		description: 'Whether the user has opted out of receiving marketing text messages',
-		routing: {
-			send: {
-				type: 'body',
-				property: 'unsubscribeTexting',
+			{
+				displayName: 'Unsubscribe Texting',
+				name: 'unsubscribeTexting',
+				type: 'boolean',
+				default: false,
+				description: 'Whether the user has opted out of receiving marketing text messages',
+				routing: {
+					send: {
+						type: 'body',
+						property: 'unsubscribeTexting',
+					},
+				},
 			},
-		},
+		],
 	},
 	// Delete by userId fields
 	{
