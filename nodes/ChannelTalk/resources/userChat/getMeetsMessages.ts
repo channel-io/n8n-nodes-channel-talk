@@ -1,44 +1,42 @@
 import type { INodeProperties } from 'n8n-workflow';
 
-const showOnlyForUserChatList = {
+const showOnlyForUserChatGetMeetsMessages = {
 	resource: ['userChat'],
-	operation: ['list'],
+	operation: ['getMeetsMessages'],
 };
 
-export const userChatListDescription: INodeProperties[] = [
+export const userChatGetMeetsMessagesDescription: INodeProperties[] = [
 	{
-		displayName: 'State',
-		name: 'state',
-		type: 'options',
-		default: 'opened',
+		displayName: 'User Chat ID',
+		name: 'userChatId',
+		type: 'string',
+		default: '',
+		required: true,
 		displayOptions: {
-			show: showOnlyForUserChatList,
+			show: showOnlyForUserChatGetMeetsMessages,
 		},
-		description: 'Filter user chats by state',
-		options: [
-			{ name: 'Closed', value: 'closed' },
-			{ name: 'Initial', value: 'initial' },
-			{ name: 'Missed', value: 'missed' },
-			{ name: 'Opened', value: 'opened' },
-			{ name: 'Queued', value: 'queued' },
-			{ name: 'Snoozed', value: 'snoozed' },
-		],
-		routing: {
-			send: {
-				type: 'query',
-				property: 'state',
-			},
+		description: 'ID of the user chat to be accessed',
+	},
+	{
+		displayName: 'Message ID',
+		name: 'messageId',
+		type: 'string',
+		default: '',
+		required: true,
+		displayOptions: {
+			show: showOnlyForUserChatGetMeetsMessages,
 		},
+		description: 'ID of the meet message',
 	},
 	{
 		displayName: 'Sort Order',
 		name: 'sortOrder',
 		type: 'options',
 		default: 'desc',
+		required: true,
 		displayOptions: {
-			show: showOnlyForUserChatList,
+			show: showOnlyForUserChatGetMeetsMessages,
 		},
-		description: 'Sort order for results',
 		options: [
 			{ name: 'Ascending', value: 'asc' },
 			{ name: 'Descending', value: 'desc' },
@@ -57,9 +55,9 @@ export const userChatListDescription: INodeProperties[] = [
 		type: 'string',
 		default: '',
 		displayOptions: {
-			show: showOnlyForUserChatList,
+			show: showOnlyForUserChatGetMeetsMessages,
 		},
-		description: 'Pagination cursor from previous response (next value)',
+		description: 'Pagination cursor',
 		routing: {
 			send: {
 				type: 'query',
@@ -72,15 +70,14 @@ export const userChatListDescription: INodeProperties[] = [
 		displayName: 'Limit',
 		name: 'limit',
 		type: 'number',
-		default: 50,
+		default: 25,
 		typeOptions: {
 			minValue: 1,
 			maxValue: 500,
 		},
 		displayOptions: {
-			show: showOnlyForUserChatList,
+			show: showOnlyForUserChatGetMeetsMessages,
 		},
-		description: 'Max number of results to return',
 		routing: {
 			send: {
 				type: 'query',

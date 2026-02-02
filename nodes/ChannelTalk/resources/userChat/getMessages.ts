@@ -1,44 +1,31 @@
 import type { INodeProperties } from 'n8n-workflow';
 
-const showOnlyForUserChatList = {
+const showOnlyForUserChatGetMessages = {
 	resource: ['userChat'],
-	operation: ['list'],
+	operation: ['getMessages'],
 };
 
-export const userChatListDescription: INodeProperties[] = [
+export const userChatGetMessagesDescription: INodeProperties[] = [
 	{
-		displayName: 'State',
-		name: 'state',
-		type: 'options',
-		default: 'opened',
+		displayName: 'User Chat ID',
+		name: 'userChatId',
+		type: 'string',
+		default: '',
+		required: true,
 		displayOptions: {
-			show: showOnlyForUserChatList,
+			show: showOnlyForUserChatGetMessages,
 		},
-		description: 'Filter user chats by state',
-		options: [
-			{ name: 'Closed', value: 'closed' },
-			{ name: 'Initial', value: 'initial' },
-			{ name: 'Missed', value: 'missed' },
-			{ name: 'Opened', value: 'opened' },
-			{ name: 'Queued', value: 'queued' },
-			{ name: 'Snoozed', value: 'snoozed' },
-		],
-		routing: {
-			send: {
-				type: 'query',
-				property: 'state',
-			},
-		},
+		description: 'ID of the user chat to be accessed',
 	},
 	{
 		displayName: 'Sort Order',
 		name: 'sortOrder',
 		type: 'options',
 		default: 'desc',
+		required: true,
 		displayOptions: {
-			show: showOnlyForUserChatList,
+			show: showOnlyForUserChatGetMessages,
 		},
-		description: 'Sort order for results',
 		options: [
 			{ name: 'Ascending', value: 'asc' },
 			{ name: 'Descending', value: 'desc' },
@@ -57,9 +44,9 @@ export const userChatListDescription: INodeProperties[] = [
 		type: 'string',
 		default: '',
 		displayOptions: {
-			show: showOnlyForUserChatList,
+			show: showOnlyForUserChatGetMessages,
 		},
-		description: 'Pagination cursor from previous response (next value)',
+		description: 'Unix timestamp value of the first message to be retrieved',
 		routing: {
 			send: {
 				type: 'query',
@@ -72,15 +59,14 @@ export const userChatListDescription: INodeProperties[] = [
 		displayName: 'Limit',
 		name: 'limit',
 		type: 'number',
-		default: 50,
+		default: 25,
 		typeOptions: {
 			minValue: 1,
 			maxValue: 500,
 		},
 		displayOptions: {
-			show: showOnlyForUserChatList,
+			show: showOnlyForUserChatGetMessages,
 		},
-		description: 'Max number of results to return',
 		routing: {
 			send: {
 				type: 'query',
