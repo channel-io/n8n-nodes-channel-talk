@@ -17,11 +17,11 @@ export const userChatListDescription: INodeProperties[] = [
 		description: 'Filter user chats by state',
 		options: [
 			{ name: 'Closed', value: 'closed' },
-			{ name: 'Opened', value: 'opened' },
-			{ name: 'Snoozed', value: 'snoozed' },
-			{ name: 'Queued', value: 'queued' },
 			{ name: 'Initial', value: 'initial' },
 			{ name: 'Missed', value: 'missed' },
+			{ name: 'Opened', value: 'opened' },
+			{ name: 'Queued', value: 'queued' },
+			{ name: 'Snoozed', value: 'snoozed' },
 		],
 		routing: {
 			send: {
