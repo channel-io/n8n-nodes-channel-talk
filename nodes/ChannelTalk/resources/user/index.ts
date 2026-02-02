@@ -1,5 +1,6 @@
 import type { INodeProperties } from 'n8n-workflow';
 import { userBlockDescription } from './block';
+import { userCrudDescription } from './crud';
 import { userTokenDescription } from './token';
 import { userTouchDescription } from './touch';
 
@@ -26,6 +27,78 @@ export const userDescription: INodeProperties[] = [
 					request: {
 						method: 'POST',
 						url: '=/open/v5/users/{{$parameter.userId}}/block',
+					},
+				},
+			},
+			{
+				name: 'Create',
+				value: 'create',
+				action: 'Create a user',
+				description: 'Create a new lead by profile',
+				routing: {
+					request: {
+						method: 'POST',
+						url: '/open/v5/users',
+					},
+				},
+			},
+			{
+				name: 'Create or Update',
+				value: 'upsert',
+				action: 'Create or update a user by member id',
+				description: 'Create a new record, or update the current one if it already exists (upsert)',
+				routing: {
+					request: {
+						method: 'PUT',
+						url: '=/open/v5/users/@{{$parameter.memberId}}',
+					},
+				},
+			},
+			{
+				name: 'Delete (by Member ID)',
+				value: 'deleteByMemberId',
+				action: 'Delete a user by member id',
+				description: 'Delete a user by member ID',
+				routing: {
+					request: {
+						method: 'DELETE',
+						url: '=/open/v5/users/@{{$parameter.memberId}}',
+					},
+				},
+			},
+			{
+				name: 'Delete (by User ID)',
+				value: 'deleteByUserId',
+				action: 'Delete a user by user id',
+				description: 'Delete a user by user ID',
+				routing: {
+					request: {
+						method: 'DELETE',
+						url: '=/open/v5/users/{{$parameter.userId}}',
+					},
+				},
+			},
+			{
+				name: 'Get (by Member ID)',
+				value: 'getByMemberId',
+				action: 'Get a user by member id',
+				description: 'Get a user by member ID',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '=/open/v5/users/@{{$parameter.memberId}}',
+					},
+				},
+			},
+			{
+				name: 'Get (by User ID)',
+				value: 'getByUserId',
+				action: 'Get a user by user id',
+				description: 'Get a user by user ID',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '=/open/v5/users/{{$parameter.userId}}',
 					},
 				},
 			},
@@ -89,10 +162,23 @@ export const userDescription: INodeProperties[] = [
 					},
 				},
 			},
+			{
+				name: 'Update',
+				value: 'update',
+				action: 'Update a user',
+				description: 'Update a user by user ID',
+				routing: {
+					request: {
+						method: 'PATCH',
+						url: '=/open/v5/users/{{$parameter.userId}}',
+					},
+				},
+			},
 		],
-		default: 'block',
+		default: 'getByUserId',
 	},
 	...userBlockDescription,
+	...userCrudDescription,
 	...userTokenDescription,
 	...userTouchDescription,
 ];
