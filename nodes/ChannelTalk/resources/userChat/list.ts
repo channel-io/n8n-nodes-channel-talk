@@ -71,7 +71,7 @@ export const userChatListDescription: INodeProperties[] = [
 		displayName: 'Limit',
 		name: 'limit',
 		type: 'number',
-		default: 25,
+		default: 50,
 		typeOptions: {
 			minValue: 1,
 			maxValue: 500,
@@ -79,7 +79,7 @@ export const userChatListDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForUserChatList,
 		},
-		description: 'Maximum number of results (1–500)',
+		description: 'Max number of results to return',
 		routing: {
 			send: {
 				type: 'query',
