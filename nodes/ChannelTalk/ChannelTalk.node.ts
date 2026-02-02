@@ -1,5 +1,6 @@
 import { type INodeType, type INodeTypeDescription } from 'n8n-workflow';
 import { messageDescription } from './resources/message';
+import { userChatDescription } from './resources/userChat';
 
 export class ChannelTalk implements INodeType {
 	description: INodeTypeDescription = {
@@ -40,10 +41,15 @@ export class ChannelTalk implements INodeType {
 						name: 'Message',
 						value: 'message',
 					},
+					{
+						name: 'User Chat',
+						value: 'userChat',
+					},
 				],
 				default: 'message',
 			},
 			...messageDescription,
+			...userChatDescription,
 		],
 	};
 }
