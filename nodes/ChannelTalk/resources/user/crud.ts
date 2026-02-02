@@ -37,6 +37,19 @@ const showOnlyForUserDeleteByMemberId = {
 
 const jsonParseExpression = '={{$value ? JSON.parse($value) : undefined}}';
 
+// Tags를 배열로 변환하고 최대 20개 제한 적용
+const tagsToArrayExpression =
+	'={{$value?.tagValues ? $value.tagValues.map(t => t.tag).slice(0, 20) : undefined}}';
+
+const profileDescription = `JSON object containing user profile fields.
+Available fields: name, email, mobileNumber (E.164 format like +821012345678), avatarUrl, firstName, lastName, landlineNumber, recentPurchaseCount (integer), recentPurchaseAmount (number).
+Custom fields are also allowed.
+Example: {"name": "John", "email": "john@example.com", "mobileNumber": "+821012345678"}.`;
+
+const profileOnceDescription = `JSON object containing profile fields that are only set if the field is not already present.
+Use this for default values that should not overwrite existing data.
+Same fields as Profile are available.`;
+
 export const userCrudDescription: INodeProperties[] = [
 	// Create user fields
 	{
@@ -51,8 +64,7 @@ export const userCrudDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForUserCreate,
 		},
-		description:
-			'JSON object containing user profile. Example: {"name": "John", "email": "john@example.com", "mobileNumber": "+821012345678"}.',
+		description: profileDescription,
 		routing: {
 			send: {
 				type: 'body',
@@ -71,7 +83,7 @@ export const userCrudDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForUserGetByUserId,
 		},
-		description: 'ID of the user to retrieve',
+		description: 'The unique identifier of the user in Channel Talk',
 	},
 	// Get by memberId fields
 	{
@@ -83,7 +95,7 @@ export const userCrudDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForUserGetByMemberId,
 		},
-		description: 'Member ID of the user to retrieve',
+		description: 'Your service member ID that you assigned to the user',
 	},
 	// Update user fields
 	{
@@ -95,7 +107,7 @@ export const userCrudDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForUserUpdate,
 		},
-		description: 'ID of the user to update',
+		description: 'The unique identifier of the user to update',
 	},
 	{
 		displayName: 'Profile (JSON)',
@@ -108,7 +120,7 @@ export const userCrudDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForUserUpdate,
 		},
-		description: 'JSON object containing user profile to update',
+		description: profileDescription,
 		routing: {
 			send: {
 				type: 'body',
@@ -128,7 +140,7 @@ export const userCrudDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForUserUpdate,
 		},
-		description: 'JSON object containing profile fields that are only set if not already present',
+		description: profileOnceDescription,
 		routing: {
 			send: {
 				type: 'body',
@@ -138,19 +150,37 @@ export const userCrudDescription: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Tags (JSON)',
-		name: 'tagsJson',
-		type: 'string',
-		default: '',
+		displayName: 'Tags',
+		name: 'tags',
+		type: 'fixedCollection',
+		typeOptions: {
+			multipleValues: true,
+		},
+		default: {},
 		displayOptions: {
 			show: showOnlyForUserUpdate,
 		},
-		description: 'JSON array of tags. Example: ["tag1", "tag2"].',
+		description: 'Tags to assign to the user. Maximum 20 tags allowed.',
+		options: [
+			{
+				name: 'tagValues',
+				displayName: 'Tag',
+				values: [
+					{
+						displayName: 'Tag',
+						name: 'tag',
+						type: 'string',
+						default: '',
+						description: 'Tag name to assign to the user',
+					},
+				],
+			},
+		],
 		routing: {
 			send: {
 				type: 'body',
 				property: 'tags',
-				value: jsonParseExpression,
+				value: tagsToArrayExpression,
 			},
 		},
 	},
@@ -162,7 +192,7 @@ export const userCrudDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForUserUpdate,
 		},
-		description: 'Whether the user is blocked',
+		description: 'Whether the user is blocked from sending messages',
 		routing: {
 			send: {
 				type: 'body',
@@ -178,7 +208,7 @@ export const userCrudDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForUserUpdate,
 		},
-		description: 'Whether the user has unsubscribed from email',
+		description: 'Whether the user has opted out of receiving marketing emails',
 		routing: {
 			send: {
 				type: 'body',
@@ -194,7 +224,7 @@ export const userCrudDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForUserUpdate,
 		},
-		description: 'Whether the user has unsubscribed from texting',
+		description: 'Whether the user has opted out of receiving marketing text messages',
 		routing: {
 			send: {
 				type: 'body',
@@ -212,7 +242,8 @@ export const userCrudDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForUserUpsert,
 		},
-		description: 'Member ID of the user to create or update',
+		description:
+			'Your service member ID. If a user with this ID exists, it will be updated; otherwise, a new user will be created.',
 	},
 	{
 		displayName: 'Profile (JSON)',
@@ -225,7 +256,7 @@ export const userCrudDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForUserUpsert,
 		},
-		description: 'JSON object containing user profile',
+		description: profileDescription,
 		routing: {
 			send: {
 				type: 'body',
@@ -245,7 +276,7 @@ export const userCrudDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForUserUpsert,
 		},
-		description: 'JSON object containing profile fields that are only set if not already present',
+		description: profileOnceDescription,
 		routing: {
 			send: {
 				type: 'body',
@@ -255,19 +286,37 @@ export const userCrudDescription: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Tags (JSON)',
-		name: 'tagsJson',
-		type: 'string',
-		default: '',
+		displayName: 'Tags',
+		name: 'tags',
+		type: 'fixedCollection',
+		typeOptions: {
+			multipleValues: true,
+		},
+		default: {},
 		displayOptions: {
 			show: showOnlyForUserUpsert,
 		},
-		description: 'JSON array of tags. Example: ["tag1", "tag2"].',
+		description: 'Tags to assign to the user. Maximum 20 tags allowed.',
+		options: [
+			{
+				name: 'tagValues',
+				displayName: 'Tag',
+				values: [
+					{
+						displayName: 'Tag',
+						name: 'tag',
+						type: 'string',
+						default: '',
+						description: 'Tag name to assign to the user',
+					},
+				],
+			},
+		],
 		routing: {
 			send: {
 				type: 'body',
 				property: 'tags',
-				value: jsonParseExpression,
+				value: tagsToArrayExpression,
 			},
 		},
 	},
@@ -279,7 +328,7 @@ export const userCrudDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForUserUpsert,
 		},
-		description: 'Whether the user is blocked',
+		description: 'Whether the user is blocked from sending messages',
 		routing: {
 			send: {
 				type: 'body',
@@ -295,7 +344,7 @@ export const userCrudDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForUserUpsert,
 		},
-		description: 'Whether the user has unsubscribed from email',
+		description: 'Whether the user has opted out of receiving marketing emails',
 		routing: {
 			send: {
 				type: 'body',
@@ -311,7 +360,7 @@ export const userCrudDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForUserUpsert,
 		},
-		description: 'Whether the user has unsubscribed from texting',
+		description: 'Whether the user has opted out of receiving marketing text messages',
 		routing: {
 			send: {
 				type: 'body',
@@ -329,7 +378,7 @@ export const userCrudDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForUserDeleteByUserId,
 		},
-		description: 'ID of the user to delete',
+		description: 'The unique identifier of the user to delete',
 	},
 	// Delete by memberId fields
 	{
@@ -341,6 +390,6 @@ export const userCrudDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForUserDeleteByMemberId,
 		},
-		description: 'Member ID of the user to delete',
+		description: 'Your service member ID of the user to delete',
 	},
 ];

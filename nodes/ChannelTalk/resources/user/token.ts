@@ -25,7 +25,7 @@ export const userTokenDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForUserTokenByUserId,
 		},
-		description: 'ID of the user to issue token for',
+		description: 'The unique identifier of the user in Channel Talk to issue token for',
 	},
 	{
 		displayName: 'Member ID',
@@ -36,7 +36,7 @@ export const userTokenDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForUserTokenByMemberId,
 		},
-		description: 'Member ID of the user to issue token for',
+		description: 'Your service member ID of the user to issue token for',
 	},
 	{
 		displayName: 'Member ID',
@@ -47,7 +47,7 @@ export const userTokenDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForSessionJwt,
 		},
-		description: 'Member ID of the user to issue session JWT for',
+		description: 'Your service member ID of the user to issue session JWT for',
 	},
 	{
 		displayName: 'Expiration',
@@ -58,7 +58,7 @@ export const userTokenDescription: INodeProperties[] = [
 			show: showOnlyForSessionJwt,
 		},
 		description:
-			'Token expiration in ISO 8601 duration format. Must be between 1 minute and 30 days. Default is 1 minute (PT1M).',
+			'Token expiration in ISO 8601 duration format. Must be between 1 minute (PT1M) and 30 days (P30D). Examples: PT1M (1 minute), PT30M (30 minutes), PT1H (1 hour), P1D (1 day), P7D (7 days).',
 		routing: {
 			send: {
 				type: 'query',
