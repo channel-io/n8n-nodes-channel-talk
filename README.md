@@ -25,7 +25,6 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 - Manager
   - List (GET /open/v5/managers)
   - Get (GET /open/v5/managers/{managerId})
-  - Update Status (PUT /open/v5/managers/{managerId}/status)
 - Team Chat
   - List (GET /open/v5/groups)
   - Get (GET /open/v5/groups/{groupId})

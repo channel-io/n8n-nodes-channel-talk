@@ -1,7 +1,6 @@
 import type { INodeProperties } from 'n8n-workflow';
 import { managerListDescription } from './list';
 import { managerGetDescription } from './get';
-import { managerUpdateStatusDescription } from './updateStatus';
 
 const showOnlyForManagers = {
 	resource: ['manager'],
@@ -41,22 +40,9 @@ export const managerDescription: INodeProperties[] = [
 					},
 				},
 			},
-			{
-				name: 'Update Status',
-				value: 'updateStatus',
-				action: 'Update manager status',
-				description: 'Update the status of a manager',
-				routing: {
-					request: {
-						method: 'PUT',
-						url: '=/open/v5/managers/{{$parameter.managerId}}/status',
-					},
-				},
-			},
 		],
 		default: 'list',
 	},
 	...managerGetDescription,
 	...managerListDescription,
-	...managerUpdateStatusDescription,
 ];
