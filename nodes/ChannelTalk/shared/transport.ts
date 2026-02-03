@@ -10,12 +10,7 @@ import type {
 } from 'n8n-workflow';
 
 export async function channelTalkApiRequest(
-	this:
-		| IHookFunctions
-		| IExecuteFunctions
-		| IExecuteSingleFunctions
-		| ILoadOptionsFunctions
-		| IWebhookFunctions,
+	this: IHookFunctions | IExecuteFunctions | IExecuteSingleFunctions | ILoadOptionsFunctions | IWebhookFunctions,
 	method: IHttpRequestMethods,
 	resource: string,
 	qs: IDataObject = {},

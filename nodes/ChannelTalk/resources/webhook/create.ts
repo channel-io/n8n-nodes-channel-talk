@@ -103,8 +103,7 @@ export const webhookCreateDescription: INodeProperties[] = [
 					rows: 3,
 				},
 				default: '',
-				description:
-					'(Deprecated) JSON array of keyword strings to filter events. Example: ["help", "support"].',
+				description: '(Deprecated) JSON array of keyword strings to filter events. Example: ["help", "support"].',
 				routing: {
 					send: {
 						type: 'body',

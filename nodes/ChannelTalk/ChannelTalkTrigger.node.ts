@@ -114,11 +114,7 @@ export class ChannelTalkTrigger implements INodeType {
 				if (webhookData.webhookId) {
 					try {
 						// Verify the webhook still exists
-						await channelTalkApiRequest.call(
-							this,
-							'GET',
-							`/open/v5/webhooks/${webhookData.webhookId}`,
-						);
+						await channelTalkApiRequest.call(this, 'GET', `/open/v5/webhooks/${webhookData.webhookId}`);
 						return true;
 					} catch {
 						// Webhook no longer exists, clear the stored ID
@@ -165,13 +161,9 @@ export class ChannelTalkTrigger implements INodeType {
 					apiVersion: 'v5',
 				};
 
-				const response = (await channelTalkApiRequest.call(
-					this,
-					'POST',
-					'/open/v5/webhooks',
-					{},
-					body,
-				)) as { webhook: ChannelTalkWebhook };
+				const response = (await channelTalkApiRequest.call(this, 'POST', '/open/v5/webhooks', {}, body)) as {
+					webhook: ChannelTalkWebhook;
+				};
 
 				if (response.webhook?.id) {
 					webhookData.webhookId = response.webhook.id;
@@ -186,11 +178,7 @@ export class ChannelTalkTrigger implements INodeType {
 
 				if (webhookData.webhookId) {
 					try {
-						await channelTalkApiRequest.call(
-							this,
-							'DELETE',
-							`/open/v5/webhooks/${webhookData.webhookId}`,
-						);
+						await channelTalkApiRequest.call(this, 'DELETE', `/open/v5/webhooks/${webhookData.webhookId}`);
 					} catch {
 						// Ignore errors if webhook doesn't exist
 					}

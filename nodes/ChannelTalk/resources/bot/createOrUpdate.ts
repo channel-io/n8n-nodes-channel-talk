@@ -96,13 +96,13 @@ export const botCreateOrUpdateDescription: INodeProperties[] = [
 					rows: 3,
 				},
 				default: '',
-				description:
-					'JSON object for internationalized bot name. Example: {"en": "Bot", "ko": "봇"}.',
+				description: 'JSON object for internationalized bot name. Example: {"en": "Bot", "ko": "봇"}.',
 				routing: {
 					send: {
 						type: 'body',
 						property: 'nameI18n',
-						value: '={{ $parameter.additionalFields?.nameI18nJson ? JSON.parse($parameter.additionalFields.nameI18nJson) : undefined }}',
+						value:
+							'={{ $parameter.additionalFields?.nameI18nJson ? JSON.parse($parameter.additionalFields.nameI18nJson) : undefined }}',
 					},
 				},
 			},
