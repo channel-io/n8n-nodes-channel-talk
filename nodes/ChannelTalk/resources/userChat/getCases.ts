@@ -60,8 +60,7 @@ export const userChatGetCasesDescription: INodeProperties[] = [
 					send: {
 						type: 'query',
 						property: 'since',
-						value:
-							'={{ $parameter.additionalOptions?.since?.trim() || undefined }}',
+						value: '={{ $parameter.additionalOptions?.since?.trim() || undefined }}',
 					},
 				},
 			},
@@ -98,8 +97,7 @@ export const userChatGetCasesDescription: INodeProperties[] = [
 					send: {
 						type: 'query',
 						property: 'sortOrder',
-						value:
-							'={{ $parameter.additionalOptions?.sortOrder ?? undefined }}',
+						value: '={{ $parameter.additionalOptions?.sortOrder ?? undefined }}',
 					},
 				},
 			},

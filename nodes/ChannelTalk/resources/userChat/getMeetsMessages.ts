@@ -69,8 +69,7 @@ export const userChatGetMeetsMessagesDescription: INodeProperties[] = [
 					send: {
 						type: 'query',
 						property: 'since',
-						value:
-							'={{ $parameter.additionalOptions?.since?.trim() || undefined }}',
+						value: '={{ $parameter.additionalOptions?.since?.trim() || undefined }}',
 					},
 				},
 			},
