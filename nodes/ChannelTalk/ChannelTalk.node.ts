@@ -6,6 +6,7 @@ import { messageDescription } from './resources/message';
 import { teamChatDescription } from './resources/teamChat';
 import { userChatDescription } from './resources/userChat';
 import { userDescription } from './resources/user';
+import { webhookDescription } from './resources/webhook';
 
 export class ChannelTalk implements INodeType {
 	description: INodeTypeDescription = {
@@ -70,6 +71,10 @@ export class ChannelTalk implements INodeType {
 						name: 'User',
 						value: 'user',
 					},
+					{
+						name: 'Webhook',
+						value: 'webhook',
+					},
 				],
 				default: 'message',
 			},
@@ -80,6 +85,7 @@ export class ChannelTalk implements INodeType {
 			...teamChatDescription,
 			...userChatDescription,
 			...userDescription,
+			...webhookDescription,
 		],
 	};
 }
