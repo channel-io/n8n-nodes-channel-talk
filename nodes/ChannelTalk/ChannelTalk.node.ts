@@ -1,6 +1,7 @@
 import { type INodeType, type INodeTypeDescription } from 'n8n-workflow';
 import { botDescription } from './resources/bot';
 import { channelDescription } from './resources/channel';
+import { managerDescription } from './resources/manager';
 import { messageDescription } from './resources/message';
 import { userChatDescription } from './resources/userChat';
 import { userDescription } from './resources/user';
@@ -49,6 +50,10 @@ export class ChannelTalk implements INodeType {
 						value: 'channel',
 					},
 					{
+						name: 'Manager',
+						value: 'manager',
+					},
+					{
 						name: 'Message',
 						value: 'message',
 					},
@@ -65,6 +70,7 @@ export class ChannelTalk implements INodeType {
 			},
 			...botDescription,
 			...channelDescription,
+			...managerDescription,
 			...messageDescription,
 			...userChatDescription,
 			...userDescription,
