@@ -26,29 +26,26 @@ export const userChatInviteDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForUserChatInvite,
 		},
-		description: 'Name of the bot that invites the managers',
-		routing: {
-			send: {
-				type: 'query',
-				property: 'botName',
-			},
-		},
+		description: 'Name of the bot that invites the managers (sent as query param in URL)',
 	},
 	{
-		displayName: 'Manager IDs',
-		name: 'managerIds',
-		type: 'string',
-		default: '',
+		displayName: 'Additional Options',
+		name: 'additionalOptions',
+		type: 'collection',
+		placeholder: 'Add option',
+		default: {},
 		displayOptions: {
 			show: showOnlyForUserChatInvite,
 		},
-		description: 'Comma-separated manager IDs to invite',
-		routing: {
-			send: {
-				type: 'query',
-				property: 'managerIds',
-				value: '={{ $parameter.managerIds ? $parameter.managerIds.split(",").map((id: string) => id.trim()).filter(Boolean) : undefined }}',
+		options: [
+			{
+				displayName: 'Manager IDs',
+				name: 'managerIds',
+				type: 'string',
+				default: '',
+				description:
+					'Comma-separated manager IDs to invite (e.g. 166211, 589203). Sent as repeated query params: managerIds=166211&managerIds=589203',
 			},
-		},
+		],
 	},
 ];

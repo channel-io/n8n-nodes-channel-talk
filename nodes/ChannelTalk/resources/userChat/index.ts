@@ -171,7 +171,7 @@ export const userChatDescription: INodeProperties[] = [
 				routing: {
 					request: {
 						method: 'PATCH',
-						url: '=/open/v5/user-chats/{{$parameter.userChatId}}/invite',
+						url: "=/open/v5/user-chats/{{$parameter.userChatId}}/invite?botName={{ encodeURIComponent($parameter.botName || '') }}{{ (() => { const ids = ($parameter.additionalOptions?.managerIds ?? '').toString().split(',').map((id) => id.trim()).filter(Boolean); return ids.length ? '&' + ids.map((id) => 'managerIds=' + encodeURIComponent(id)).join('&') : ''; })() }}",
 					},
 				},
 			},
@@ -196,6 +196,7 @@ export const userChatDescription: INodeProperties[] = [
 					request: {
 						method: 'PATCH',
 						url: '=/open/v5/user-chats/{{$parameter.userChatId}}',
+						body: '={{ $parameter.sendBody !== false && $parameter.requestBody ? { description: $parameter.requestBody.description ?? "" } : undefined }}',
 					},
 				},
 			},
@@ -219,7 +220,7 @@ export const userChatDescription: INodeProperties[] = [
 				routing: {
 					request: {
 						method: 'GET',
-						url: '=/open/v5/user-chats/{{$parameter.userChatId}}',
+						url: "=/open/v5/user-chats/{{ String($parameter.userChatId ?? '') }}",
 					},
 				},
 			},

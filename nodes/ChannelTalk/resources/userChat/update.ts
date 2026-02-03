@@ -18,20 +18,36 @@ export const userChatUpdateDescription: INodeProperties[] = [
 		description: 'ID of the user chat to be accessed',
 	},
 	{
-		displayName: 'Description',
-		name: 'description',
-		type: 'string',
-		default: '',
-		required: true,
+		displayName: 'Send Body',
+		name: 'sendBody',
+		type: 'boolean',
+		default: true,
 		displayOptions: {
 			show: showOnlyForUserChatUpdate,
 		},
-		description: 'User chat description',
-		routing: {
-			send: {
-				type: 'body',
-				property: 'description',
+		description: 'Whether to send a request body (JSON with description)',
+	},
+	{
+		displayName: 'Body Parameters',
+		name: 'requestBody',
+		type: 'collection',
+		placeholder: 'Add body field',
+		default: {},
+		displayOptions: {
+			show: showOnlyForUserChatUpdate,
+			hide: {
+				sendBody: [false],
 			},
 		},
+		description: 'Request body as JSON. Keys and values below are sent as body.',
+		options: [
+			{
+				displayName: 'Description',
+				name: 'description',
+				type: 'string',
+				default: '',
+				description: 'User chat description',
+			},
+		],
 	},
 ];
