@@ -54,7 +54,8 @@
 			"dist/credentials/ChannelTalkApi.credentials.js"
 		],
 		"nodes": [
-			"dist/nodes/ChannelTalk/ChannelTalk.node.js"
+			"dist/nodes/ChannelTalk/ChannelTalk.node.js",
+			"dist/nodes/ChannelTalk/ChannelTalkTrigger.node.js"
 		]
 	},
 	"devDependencies": {
