@@ -1,5 +1,11 @@
 import { type INodeType, type INodeTypeDescription } from 'n8n-workflow';
-import { messageDescription } from './resources/message';
+import { botDescription } from './resources/bot';
+import { channelDescription } from './resources/channel';
+import { managerDescription } from './resources/manager';
+import { teamChatDescription } from './resources/teamChat';
+import { userChatDescription } from './resources/userChat';
+import { userDescription } from './resources/user';
+import { webhookDescription } from './resources/webhook';
 
 export class ChannelTalk implements INodeType {
 	description: INodeTypeDescription = {
@@ -37,13 +43,43 @@ export class ChannelTalk implements INodeType {
 				noDataExpression: true,
 				options: [
 					{
-						name: 'Message',
-						value: 'message',
+						name: 'Bot',
+						value: 'bot',
+					},
+					{
+						name: 'Channel',
+						value: 'channel',
+					},
+					{
+						name: 'Manager',
+						value: 'manager',
+					},
+					{
+						name: 'Team Chat',
+						value: 'teamChat',
+					},
+					{
+						name: 'User',
+						value: 'user',
+					},
+					{
+						name: 'User Chat',
+						value: 'userChat',
+					},
+					{
+						name: 'Webhook',
+						value: 'webhook',
 					},
 				],
-				default: 'message',
+				default: 'userChat',
 			},
-			...messageDescription,
+			...botDescription,
+			...channelDescription,
+			...managerDescription,
+			...teamChatDescription,
+			...userChatDescription,
+			...userDescription,
+			...webhookDescription,
 		],
 	};
 }

@@ -18,10 +18,11 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "24"
+          node-version: '24'
 
       - run: corepack enable
       - run: pnpm install --frozen-lockfile
+      - run: pnpm run prettier
       - run: pnpm run lint
       - run: pnpm run build
       - run: pnpm test --if-present
