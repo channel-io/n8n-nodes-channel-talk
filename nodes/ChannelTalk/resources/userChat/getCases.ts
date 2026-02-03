@@ -69,7 +69,7 @@ export const userChatGetCasesDescription: INodeProperties[] = [
 				displayName: 'Limit',
 				name: 'limit',
 				type: 'number',
-				default: 100,
+				default: 50,
 				typeOptions: {
 					minValue: 1,
 					maxValue: 500,
