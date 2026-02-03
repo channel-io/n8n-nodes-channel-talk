@@ -69,12 +69,12 @@ export const userChatGetCasesDescription: INodeProperties[] = [
 				displayName: 'Limit',
 				name: 'limit',
 				type: 'number',
-				default: 25,
+				default: 100,
 				typeOptions: {
 					minValue: 1,
 					maxValue: 500,
 				},
-				description: 'Max number of results',
+				description: 'Max number of results to return',
 				routing: {
 					send: {
 						type: 'query',

@@ -44,7 +44,7 @@ export const userChatInviteDescription: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				description:
-					'Comma-separated manager IDs to invite (e.g. 166211, 589203). Sent as repeated query params: managerIds=166211&managerIds=589203',
+					'Comma-separated manager IDs to invite (e.g. 166211, 589203). Sent as repeated query params: managerIds=166211&managerIds=589203.',
 			},
 		],
 	},

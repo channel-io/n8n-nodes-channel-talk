@@ -78,12 +78,12 @@ export const userChatGetMeetsMessagesDescription: INodeProperties[] = [
 				displayName: 'Limit',
 				name: 'limit',
 				type: 'number',
-				default: 25,
+				default: 50,
 				typeOptions: {
 					minValue: 1,
 					maxValue: 500,
 				},
-				description: 'Max number of results',
+				description: 'Max number of results to return',
 				routing: {
 					send: {
 						type: 'query',
