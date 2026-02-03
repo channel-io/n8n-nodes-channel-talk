@@ -3,6 +3,7 @@ import { botDescription } from './resources/bot';
 import { channelDescription } from './resources/channel';
 import { managerDescription } from './resources/manager';
 import { messageDescription } from './resources/message';
+import { teamChatDescription } from './resources/teamChat';
 import { userChatDescription } from './resources/userChat';
 import { userDescription } from './resources/user';
 
@@ -58,6 +59,10 @@ export class ChannelTalk implements INodeType {
 						value: 'message',
 					},
 					{
+						name: 'Team Chat',
+						value: 'teamChat',
+					},
+					{
 						name: 'User Chat',
 						value: 'userChat',
 					},
@@ -72,6 +77,7 @@ export class ChannelTalk implements INodeType {
 			...channelDescription,
 			...managerDescription,
 			...messageDescription,
+			...teamChatDescription,
 			...userChatDescription,
 			...userDescription,
 		],
