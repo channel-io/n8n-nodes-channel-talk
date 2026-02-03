@@ -58,18 +58,6 @@ export const userChatDescription: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Create Message',
-				value: 'createMessage',
-				action: 'Send a message to a chat',
-				description: 'Send a new message to a chat',
-				routing: {
-					request: {
-						method: 'POST',
-						url: '=/open/v5/user-chats/{{$parameter.userChatId}}/messages',
-					},
-				},
-			},
-			{
 				name: 'Create (by User ID)',
 				value: 'createByUserId',
 				action: 'Create a user chat by user id',
@@ -78,6 +66,18 @@ export const userChatDescription: INodeProperties[] = [
 					request: {
 						method: 'POST',
 						url: '=/open/v5/users/{{$parameter.userId}}/user-chats',
+					},
+				},
+			},
+			{
+				name: 'Create Message',
+				value: 'createMessage',
+				action: 'Send a message to a chat',
+				description: 'Send a new message to a chat',
+				routing: {
+					request: {
+						method: 'POST',
+						url: '=/open/v5/user-chats/{{$parameter.userChatId}}/messages',
 					},
 				},
 			},

@@ -64,12 +64,12 @@ export class ChannelTalk implements INodeType {
 						value: 'teamChat',
 					},
 					{
-						name: 'User Chat',
-						value: 'userChat',
-					},
-					{
 						name: 'User',
 						value: 'user',
+					},
+					{
+						name: 'User Chat',
+						value: 'userChat',
 					},
 					{
 						name: 'Webhook',
