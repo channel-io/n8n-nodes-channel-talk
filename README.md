@@ -23,6 +23,21 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 - User Chat
     - Open a user chat (PUT /open/v5/user-chats/{userChatId}/open)
     - List user chats (GET /open/v5/user-chats)
+    - Snooze (PUT /open/v5/user-chats/{userChatId}/snooze)
+    - Remove (DELETE /open/v5/user-chats/{userChatId}/remove)
+    - Get Messages File (GET /open/v5/user-chats/{userChatId}/messages/file)
+    - Create Message (POST /open/v5/user-chats/{userChatId}/messages)
+    - Get Meets Messages (GET /open/v5/user-chats/{userChatId}/meets/{messageId}/messages)
+    - Get Messages (GET /open/v5/user-chats/{userChatId}/messages)
+    - Get Sessions (GET /open/v5/user-chats/{userChatId}/sessions)
+    - Get Meets Recording (GET /open/v5/user-chats/{userChatId}/meets/{messageId}/recording)
+    - Assign to Manager (PATCH /open/v5/user-chats/{userChatId}/assign-to/managers/{managerId})
+    - Invite (PATCH /open/v5/user-chats/{userChatId}/invite)
+    - Get Cases (GET /open/v5/user-chats/cases)
+    - Update (PATCH /open/v5/user-chats/{userChatId})
+    - Delete (DELETE /open/v5/user-chats/{userChatId})
+    - Get (GET /open/v5/user-chats/{userChatId})
+    - Close (PATCH /open/v5/user-chats/{userChatId}/close)
 
 ## Credentials
 
