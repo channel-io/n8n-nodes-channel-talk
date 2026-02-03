@@ -67,8 +67,7 @@ export const userChatListDescription: INodeProperties[] = [
 					send: {
 						type: 'query',
 						property: 'since',
-						value:
-							'={{ $parameter.queryOptions?.since?.trim() || undefined }}',
+						value: '={{ $parameter.queryOptions?.since?.trim() || undefined }}',
 					},
 				},
 			},

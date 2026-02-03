@@ -1,9 +1,4 @@
-import type {
-	IAuthenticateGeneric,
-	ICredentialTestRequest,
-	ICredentialType,
-	INodeProperties,
-} from 'n8n-workflow';
+import type { IAuthenticateGeneric, ICredentialTestRequest, ICredentialType, INodeProperties } from 'n8n-workflow';
 
 export class ChannelTalkApi implements ICredentialType {
 	name = 'channelTalkApi';
