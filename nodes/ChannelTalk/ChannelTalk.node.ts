@@ -1,4 +1,5 @@
 import { type INodeType, type INodeTypeDescription } from 'n8n-workflow';
+import { botDescription } from './resources/bot';
 import { channelDescription } from './resources/channel';
 import { messageDescription } from './resources/message';
 import { userChatDescription } from './resources/userChat';
@@ -40,6 +41,10 @@ export class ChannelTalk implements INodeType {
 				noDataExpression: true,
 				options: [
 					{
+						name: 'Bot',
+						value: 'bot',
+					},
+					{
 						name: 'Channel',
 						value: 'channel',
 					},
@@ -58,6 +63,7 @@ export class ChannelTalk implements INodeType {
 				],
 				default: 'message',
 			},
+			...botDescription,
 			...channelDescription,
 			...messageDescription,
 			...userChatDescription,
