@@ -1,4 +1,6 @@
 import type { INodeProperties } from 'n8n-workflow';
+import { userChatCreateByUserIdDescription } from './createByUserId';
+import { userChatListByUserIdDescription } from './listByUserId';
 import { userChatOpenDescription } from './open';
 import { userChatListDescription } from './list';
 import { userChatSnoozeDescription } from './snooze';
@@ -52,6 +54,18 @@ export const userChatDescription: INodeProperties[] = [
 					request: {
 						method: 'PATCH',
 						url: '=/open/v5/user-chats/{{$parameter.userChatId}}/close',
+					},
+				},
+			},
+			{
+				name: 'Create (by User ID)',
+				value: 'createByUserId',
+				action: 'Create a user chat by user id',
+				description: 'Create a new user chat for a specific user',
+				routing: {
+					request: {
+						method: 'POST',
+						url: '=/open/v5/users/{{$parameter.userId}}/user-chats',
 					},
 				},
 			},
@@ -188,6 +202,18 @@ export const userChatDescription: INodeProperties[] = [
 				},
 			},
 			{
+				name: 'List (by User ID)',
+				value: 'listByUserId',
+				action: 'List user chats by user id',
+				description: 'List user chats for a specific user',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '=/open/v5/users/{{$parameter.userId}}/user-chats',
+					},
+				},
+			},
+			{
 				name: 'Open',
 				value: 'open',
 				action: 'Open a user chat',
@@ -239,6 +265,8 @@ export const userChatDescription: INodeProperties[] = [
 		],
 		default: 'open',
 	},
+	...userChatCreateByUserIdDescription,
+	...userChatListByUserIdDescription,
 	...userChatOpenDescription,
 	...userChatListDescription,
 	...userChatSnoozeDescription,
