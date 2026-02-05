@@ -35,13 +35,6 @@ const showOnlyForUserDeleteByMemberId = {
 	operation: ['deleteByMemberId'],
 };
 
-const jsonParseExpression = '={{$value ? JSON.parse($value) : undefined}}';
-
-// Tags JSON 배열 파싱 및 최대 20개 제한 적용
-// 배열이 아니면 무시, 문자열이 아닌 요소도 필터링
-const tagsJsonArrayExpression =
-	'={{$value ? (() => { const arr = JSON.parse($value); return Array.isArray(arr) ? arr.filter(t => typeof t === "string").slice(0, 20) : undefined; })() : undefined}}';
-
 const profileDescription = `JSON object containing user profile fields.
 Available fields: name, email, mobileNumber (E.164 format like +821012345678), avatarUrl, firstName, lastName, landlineNumber, recentPurchaseCount (integer), recentPurchaseAmount (number).
 Custom fields are also allowed.
@@ -56,10 +49,7 @@ export const userCrudDescription: INodeProperties[] = [
 	{
 		displayName: 'Profile (JSON)',
 		name: 'profileJson',
-		type: 'string',
-		typeOptions: {
-			rows: 5,
-		},
+		type: 'json',
 		default: '',
 		required: true,
 		displayOptions: {
@@ -70,7 +60,6 @@ export const userCrudDescription: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'profile',
-				value: jsonParseExpression,
 			},
 		},
 	},
@@ -136,52 +125,40 @@ export const userCrudDescription: INodeProperties[] = [
 			{
 				displayName: 'Profile (JSON)',
 				name: 'profileJson',
-				type: 'string',
-				typeOptions: {
-					rows: 5,
-				},
+				type: 'json',
 				default: '',
 				description: profileDescription,
 				routing: {
 					send: {
 						type: 'body',
 						property: 'profile',
-						value: jsonParseExpression,
 					},
 				},
 			},
 			{
 				displayName: 'Profile Once (JSON)',
 				name: 'profileOnceJson',
-				type: 'string',
-				typeOptions: {
-					rows: 5,
-				},
+				type: 'json',
 				default: '',
 				description: profileOnceDescription,
 				routing: {
 					send: {
 						type: 'body',
 						property: 'profileOnce',
-						value: jsonParseExpression,
 					},
 				},
 			},
 			{
 				displayName: 'Tags (JSON Array)',
 				name: 'tagsJson',
-				type: 'string',
-				typeOptions: {
-					rows: 3,
-				},
+				type: 'json',
 				default: '',
 				description:
-					'JSON array of tag strings to assign to the user. Maximum 20 tags allowed. Non-string values will be filtered out. Example: ["vip", "premium", "active"].',
+					'JSON array of tag strings to assign to the user. Maximum 20 tags allowed. Example: ["vip", "premium", "active"].',
 				routing: {
 					send: {
 						type: 'body',
 						property: 'tags',
-						value: tagsJsonArrayExpression,
 					},
 				},
 			},
@@ -252,52 +229,40 @@ export const userCrudDescription: INodeProperties[] = [
 			{
 				displayName: 'Profile (JSON)',
 				name: 'profileJson',
-				type: 'string',
-				typeOptions: {
-					rows: 5,
-				},
+				type: 'json',
 				default: '',
 				description: profileDescription,
 				routing: {
 					send: {
 						type: 'body',
 						property: 'profile',
-						value: jsonParseExpression,
 					},
 				},
 			},
 			{
 				displayName: 'Profile Once (JSON)',
 				name: 'profileOnceJson',
-				type: 'string',
-				typeOptions: {
-					rows: 5,
-				},
+				type: 'json',
 				default: '',
 				description: profileOnceDescription,
 				routing: {
 					send: {
 						type: 'body',
 						property: 'profileOnce',
-						value: jsonParseExpression,
 					},
 				},
 			},
 			{
 				displayName: 'Tags (JSON Array)',
 				name: 'tagsJson',
-				type: 'string',
-				typeOptions: {
-					rows: 3,
-				},
+				type: 'json',
 				default: '',
 				description:
-					'JSON array of tag strings to assign to the user. Maximum 20 tags allowed. Non-string values will be filtered out. Example: ["vip", "premium", "active"].',
+					'JSON array of tag strings to assign to the user. Maximum 20 tags allowed. Example: ["vip", "premium", "active"].',
 				routing: {
 					send: {
 						type: 'body',
 						property: 'tags',
-						value: tagsJsonArrayExpression,
 					},
 				},
 			},

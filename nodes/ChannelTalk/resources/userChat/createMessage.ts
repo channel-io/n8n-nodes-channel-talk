@@ -5,9 +5,6 @@ const showOnlyForUserChatCreateMessage = {
 	operation: ['createMessage'],
 };
 
-// API expects body.blocks = array. Accept either "[...]" or "{\"blocks\":[...]}"
-const blocksValueExpression =
-	'={{ (() => { try { const v = $value ? JSON.parse($value) : undefined; if (!v) return undefined; return Array.isArray(v) ? v : v.blocks; } catch(e) { return undefined; } })() }}';
 export const userChatCreateMessageDescription: INodeProperties[] = [
 	{
 		displayName: 'User Chat ID',
@@ -40,21 +37,17 @@ export const userChatCreateMessageDescription: INodeProperties[] = [
 	{
 		displayName: 'Blocks (JSON)',
 		name: 'blocksJson',
-		type: 'string',
-		typeOptions: {
-			rows: 5,
-		},
+		type: 'json',
 		default: '',
 		required: true,
 		displayOptions: {
 			show: showOnlyForUserChatCreateMessage,
 		},
-		description: 'JSON array of message blocks (e.g. [{"type":"text","value":"Hello"}] or {"blocks":[...]})',
+		description: 'JSON array of message blocks (e.g. [{"type":"text","value":"Hello"}])',
 		routing: {
 			send: {
 				type: 'body',
 				property: 'blocks',
-				value: blocksValueExpression,
 			},
 		},
 	},
