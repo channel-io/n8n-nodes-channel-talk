@@ -68,15 +68,7 @@ export interface ParseOptions {
 // Constants
 // ============================================================================
 
-const VALID_BUTTON_COLORS: ButtonColor[] = [
-	'cobalt',
-	'green',
-	'orange',
-	'red',
-	'black',
-	'pink',
-	'purple',
-];
+const VALID_BUTTON_COLORS: ButtonColor[] = ['cobalt', 'green', 'orange', 'red', 'black', 'pink', 'purple'];
 
 const CODE_BLOCK_REGEX = /^```(\w*)\s*\n?([\s\S]*?)```$/m;
 const BUTTON_REGEX = /\[([^\]]+)\]\(([^)]+)\)/g;
@@ -142,10 +134,7 @@ function parseButtonAction(url: string): ButtonAction {
  * Parses button title for color specification
  * Format: "title:color" or just "title"
  */
-function parseButtonTitle(
-	title: string,
-	defaultColor?: ButtonColor,
-): { title: string; color?: ButtonColor } {
+function parseButtonTitle(title: string, defaultColor?: ButtonColor): { title: string; color?: ButtonColor } {
 	const match = title.match(BUTTON_WITH_COLOR_REGEX);
 	if (match) {
 		const [, buttonTitle, colorStr] = match;
@@ -160,10 +149,7 @@ function parseButtonTitle(
 /**
  * Extracts buttons from markdown text and returns text without button syntax
  */
-function extractButtons(
-	text: string,
-	defaultColor?: ButtonColor,
-): { text: string; buttons: ChannelTalkButton[] } {
+function extractButtons(text: string, defaultColor?: ButtonColor): { text: string; buttons: ChannelTalkButton[] } {
 	const buttons: ChannelTalkButton[] = [];
 	let cleanText = text;
 	let match: RegExpExecArray | null;
@@ -286,10 +272,7 @@ function parseBulletList(lines: string[], startIndex: number): { block: BulletsB
 /**
  * Parses markdown text into Channel Talk blocks and buttons format
  */
-export function parseMarkdownToChannelTalk(
-	markdown: string,
-	options: ParseOptions = {},
-): ParseResult {
+export function parseMarkdownToChannelTalk(markdown: string, options: ParseOptions = {}): ParseResult {
 	const { defaultButtonColor, preserveMarkdown = true } = options;
 
 	if (!markdown || markdown.trim() === '') {

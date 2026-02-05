@@ -1,9 +1,4 @@
-import type {
-	IExecuteFunctions,
-	INodeExecutionData,
-	INodeType,
-	INodeTypeDescription,
-} from 'n8n-workflow';
+import type { IExecuteFunctions, INodeExecutionData, INodeType, INodeTypeDescription } from 'n8n-workflow';
 import { parseMarkdownToChannelTalk, type ButtonColor, type ParseOptions } from './shared/markdownParser';
 
 export class ChannelTalkMarkdownToMessage implements INodeType {
