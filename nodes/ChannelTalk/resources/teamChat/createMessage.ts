@@ -15,7 +15,6 @@ const showOnlyForTeamChatCreateMessageBlocks = {
 	operation: ['createMessageBlocks'],
 };
 
-const jsonParseExpression = '={{$value ? JSON.parse($value) : undefined}}';
 const optionsValueExpression =
 	'={{(() => { const value = $value; if (Array.isArray(value)) { const filtered = value.filter((option) => option !== ""); return filtered.length ? filtered : undefined; } return value ? [value] : undefined; })()}}';
 
@@ -67,10 +66,7 @@ export const teamChatCreateMessageDescription: INodeProperties[] = [
 	{
 		displayName: 'Blocks (JSON)',
 		name: 'blocksJson',
-		type: 'string',
-		typeOptions: {
-			rows: 5,
-		},
+		type: 'json',
 		default: '',
 		required: true,
 		displayOptions: {
@@ -81,17 +77,13 @@ export const teamChatCreateMessageDescription: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'blocks',
-				value: jsonParseExpression,
 			},
 		},
 	},
 	{
 		displayName: 'Buttons (JSON)',
 		name: 'buttonsJson',
-		type: 'string',
-		typeOptions: {
-			rows: 5,
-		},
+		type: 'json',
 		default: '',
 		displayOptions: {
 			show: showOnlyForTeamChatCreateMessage,
@@ -101,17 +93,14 @@ export const teamChatCreateMessageDescription: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'buttons',
-				value: jsonParseExpression,
+				value: '={{ $value || undefined }}',
 			},
 		},
 	},
 	{
 		displayName: 'Files (JSON)',
 		name: 'filesJson',
-		type: 'string',
-		typeOptions: {
-			rows: 5,
-		},
+		type: 'json',
 		default: '',
 		displayOptions: {
 			show: showOnlyForTeamChatCreateMessage,
@@ -121,7 +110,7 @@ export const teamChatCreateMessageDescription: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'files',
-				value: jsonParseExpression,
+				value: '={{ $value || undefined }}',
 			},
 		},
 	},
