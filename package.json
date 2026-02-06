@@ -55,8 +55,7 @@
 		],
 		"nodes": [
 			"dist/nodes/ChannelTalk/ChannelTalk.node.js",
-			"dist/nodes/ChannelTalk/ChannelTalkTrigger.node.js",
-			"dist/nodes/ChannelTalk/ChannelTalkMarkdownToMessage.node.js"
+			"dist/nodes/ChannelTalk/ChannelTalkTrigger.node.js"
 		]
 	},
 	"devDependencies": {
