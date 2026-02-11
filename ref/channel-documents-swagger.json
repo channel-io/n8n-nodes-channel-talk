@@ -1,0 +1,2266 @@
+{
+    "schemes": [],
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a documentation for Open API of Channel Talk Document feature. Register an API key from Channel Talk to access this API. Please refer to the API documentation (https://developers.channel.io/) for more information.",
+        "title": "Open API for Channel Talk Document",
+        "contact": {},
+        "version": "v1"
+    },
+    "host": "document-api.channel.io",
+    "basePath": "",
+    "paths": {
+        "/open/v1/languages": {
+            "get": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Retrives the list of supported languages in the document system.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Miscellaneous"
+                ],
+                "summary": "Load Supported Languages from System",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/languages.languagesView"
+                        }
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me": {
+            "get": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Retrieves this space's information.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Spaces"
+                ],
+                "summary": "Get a space",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/spaces.spaceView"
+                        }
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me/articles": {
+            "get": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Retrieves a paginated list of articles of a space by language, order by update timestamp.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "List articles of a space",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Language",
+                        "name": "language",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "enum": [
+                            "published",
+                            "unpublished"
+                        ],
+                        "type": "string",
+                        "description": "State of the article snapshot",
+                        "name": "state",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Topic ID",
+                        "name": "topicId",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Pagination Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Pagination Cursor",
+                        "name": "since",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            "asc",
+                            "desc"
+                        ],
+                        "type": "string",
+                        "description": "Sort Order",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/articles.articlesListView"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Creates a new article and its revision in draft state.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Manage Articles and Revisions"
+                ],
+                "summary": "Create a new article and revision",
+                "parameters": [
+                    {
+                        "description": "Article Create Request",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/articles.articleCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/articles.articleRevisionView"
+                        }
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me/articles/${slug}": {
+            "get": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Retrieves an article by its slug and language.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Get an article by slug and language",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Slug",
+                        "name": "slug",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Language",
+                        "name": "language",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/articles.articleView"
+                        }
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me/articles/batch": {
+            "get": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Retrieves multiple articles by their IDs and a language. Can retrieve up to 25 articles at once.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Get multiple articles by ids and a language",
+                "parameters": [
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi",
+                        "description": "Article IDs",
+                        "name": "ids[]",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Language",
+                        "name": "language",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/articles.articlesView"
+                        }
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me/articles/{articleID}": {
+            "get": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Retrieves an article by its ID and language.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Get an article by id and language",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Article ID",
+                        "name": "articleID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Language",
+                        "name": "language",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/articles.articleView"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Deletes an article and all its revisions. Articles with published revisions cannot be deleted.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Manage Articles and Revisions"
+                ],
+                "summary": "Delete an article",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Article ID",
+                        "name": "articleID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me/articles/{articleID}/revisions": {
+            "get": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Retrieves a paginated list of revisions in an article by language, order by update timestamp.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Revisions"
+                ],
+                "summary": "List revisions in an article and language",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Article ID",
+                        "name": "articleID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Language",
+                        "name": "language",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Pagination Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Pagination Cursor",
+                        "name": "since",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            "asc",
+                            "desc"
+                        ],
+                        "type": "string",
+                        "description": "Sort Order",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/articles.revisionsListView"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Creates a new revision in an article in draft state.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Manage Articles and Revisions"
+                ],
+                "summary": "Create a new revision",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Article ID",
+                        "name": "articleID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Revision Create Request",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/articles.revisionCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/articles.articleRevisionView"
+                        }
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me/articles/{articleID}/revisions/batch": {
+            "get": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Retrieves multiple revisions in an article by their revision IDs. Can retrieve up to 25 revisions at once.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Revisions"
+                ],
+                "summary": "Get multiple revisions in an article by revision ids",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Article ID",
+                        "name": "articleID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi",
+                        "description": "Revision IDs",
+                        "name": "ids[]",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/articles.revisionView"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me/articles/{articleID}/revisions/{revisionID}": {
+            "get": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Retrieves a revision by its article and revision ID.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Revisions"
+                ],
+                "summary": "Get a revision by article and revision id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Article ID",
+                        "name": "articleID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Revision ID",
+                        "name": "revisionID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/articles.revisionView"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Deletes a revision of an article. Published revisions cannot be deleted.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Manage Articles and Revisions"
+                ],
+                "summary": "Delete a revision",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Article ID",
+                        "name": "articleID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Revision ID",
+                        "name": "revisionID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            },
+            "patch": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Saves a draft revision with new content.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Manage Articles and Revisions"
+                ],
+                "summary": "Save a revision",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Article ID",
+                        "name": "articleID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Revision ID",
+                        "name": "revisionID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Revision Save Request",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/articles.revisionSaveRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/articles.articleRevisionView"
+                        }
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me/articles/{articleID}/revisions/{revisionID}/publish": {
+            "put": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Publishes a revision of an article, making it the current revision and the revision accessible in the website.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Manage Articles and Revisions"
+                ],
+                "summary": "Publish a revision",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Article ID",
+                        "name": "articleID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Revision ID",
+                        "name": "revisionID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/articles.articleRevisionView"
+                        }
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me/articles/{articleID}/revisions/{revisionID}/unpublish": {
+            "put": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Unpublishes a revision of an article, making it inaccessible in the website.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Manage Articles and Revisions"
+                ],
+                "summary": "Unpublish a revision",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Article ID",
+                        "name": "articleID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Revision ID",
+                        "name": "revisionID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/articles.articleRevisionView"
+                        }
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me/authors": {
+            "get": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Retrieves a paginated list of authors in a space, ordered by their creation time (createdAt).",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authors"
+                ],
+                "summary": "List authors of a space",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Pagination Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Pagination Cursor",
+                        "name": "since",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            "asc",
+                            "desc"
+                        ],
+                        "type": "string",
+                        "description": "Sort Order",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/authors.authorsListView"
+                        }
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me/authors/batch": {
+            "get": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Retrieves many authors by their IDs. Can retrieve up to 25 authors at once.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authors"
+                ],
+                "summary": "Batch get many authors",
+                "parameters": [
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi",
+                        "description": "Author IDs",
+                        "name": "ids[]",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/authors.authorsView"
+                        }
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me/authors/{authorID}": {
+            "get": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Retrieves an author by its ID.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authors"
+                ],
+                "summary": "Get an author",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Author ID",
+                        "name": "authorID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/authors.authorView"
+                        }
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me/categories/${slug}": {
+            "get": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Retrieves a category by its slug.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get a category by slug",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Category Slug",
+                        "name": "slug",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/categories.categoryView"
+                        }
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me/categories/batch": {
+            "get": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Retrieves many categories by their IDs. Can retrieve up to 25 categories at once.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Batch get many categories",
+                "parameters": [
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi",
+                        "description": "Category IDs",
+                        "name": "ids[]",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/categories.categoriesView"
+                        }
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me/categories/{categoryID}": {
+            "get": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Retrieves a category by its ID.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get a category",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Category ID",
+                        "name": "categoryID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/categories.categoryView"
+                        }
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me/nav-nodes/$all": {
+            "get": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Retrieves all of navigation nodes in a space. The client should be able to compose the hierarchy of the navigation nodes.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Navigation"
+                ],
+                "summary": "View a full navigation tree of a space",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/navnodes.navNodesAllView"
+                        }
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me/nav-nodes/${entityTypes}/{entityID}/$children": {
+            "get": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Retrieves the node itself specified by the connected entity type and id and its direct children nodes, with the connected entities.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Navigation"
+                ],
+                "summary": "View the children of a navigation node by entity",
+                "parameters": [
+                    {
+                        "enum": [
+                            "categories",
+                            "articles"
+                        ],
+                        "type": "string",
+                        "description": "Entity Types",
+                        "name": "entityTypes",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Entity ID",
+                        "name": "entityID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Language",
+                        "name": "language",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/navnodes.navNodesLevelView"
+                        }
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me/nav-nodes/${entityTypes}/{entityID}/$path": {
+            "get": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Retrieves the path of a navigation node from the root node to the node specified by the connected entity type and id, with the connected entities. This can be used for breadcrumbs, for example.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Navigation"
+                ],
+                "summary": "View the path of a navigation node from the root by entity",
+                "parameters": [
+                    {
+                        "enum": [
+                            "categories",
+                            "articles"
+                        ],
+                        "type": "string",
+                        "description": "Entity Types",
+                        "name": "entityTypes",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Entity ID",
+                        "name": "entityID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Language",
+                        "name": "language",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/navnodes.navNodesPathView"
+                        }
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me/nav-nodes/{navNodeID}/$children": {
+            "get": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Retrieves the node itself specified by the id and its direct children nodes, with the connected entities.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Navigation"
+                ],
+                "summary": "View the children of a navigation node",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Navigation Node ID",
+                        "name": "navNodeID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Language",
+                        "name": "language",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/navnodes.navNodesLevelView"
+                        }
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me/nav-nodes/{navNodeID}/$path": {
+            "get": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Retrieves the path of a navigation node from the root node to the node specified by the id, with the connected entities. This can be used for breadcrumbs, for example.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Navigation"
+                ],
+                "summary": "View the path of a navigation node from the root",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Navigation Node ID",
+                        "name": "navNodeID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Language",
+                        "name": "language",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/navnodes.navNodesPathView"
+                        }
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me/topics": {
+            "get": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Retrieves a paginated list of topics in a space, ordered by their updated time (updatedAt).",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Topics"
+                ],
+                "summary": "List topics of a space",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Pagination Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Pagination Cursor",
+                        "name": "since",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            "asc",
+                            "desc"
+                        ],
+                        "type": "string",
+                        "description": "Sort Order",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/topics.topicsListView"
+                        }
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me/topics/batch": {
+            "get": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Retrieves many topics by their IDs. Can retrieve up to 25 topics at once.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Topics"
+                ],
+                "summary": "Batch get many topics",
+                "parameters": [
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi",
+                        "description": "Topic IDs",
+                        "name": "ids[]",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/topics.topicsView"
+                        }
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me/topics/search": {
+            "get": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Retrieves a list of topics matching the search query (at most 10 topics).",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Topics"
+                ],
+                "summary": "Search topics of a space",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Search Query",
+                        "name": "query",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/topics.topicsSearchView"
+                        }
+                    }
+                }
+            }
+        },
+        "/open/v1/spaces/$me/topics/{topicID}": {
+            "get": {
+                "security": [
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "description": "Retrieves a topic by its ID.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Topics"
+                ],
+                "summary": "Get a topic",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Topic ID",
+                        "name": "topicID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/topics.topicView"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "articles.articleCategory": {
+            "type": "object",
+            "properties": {
+                "articleId": {
+                    "type": "string"
+                },
+                "category": {
+                    "$ref": "#/definitions/dto.Category"
+                }
+            }
+        },
+        "articles.articleCreateRequest": {
+            "type": "object",
+            "required": [
+                "language",
+                "name"
+            ],
+            "properties": {
+                "authorId": {
+                    "type": "string",
+                    "example": "42"
+                },
+                "body": {
+                    "type": "array",
+                    "items": {
+                        "type": "object"
+                    }
+                },
+                "bodyHtml": {
+                    "type": "string",
+                    "example": "\u003cp\u003eHello, World!\u003c/p\u003e"
+                },
+                "language": {
+                    "type": "string",
+                    "example": "ko"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 1,
+                    "example": "My Article"
+                },
+                "subtitle": {
+                    "type": "string",
+                    "maxLength": 1000,
+                    "minLength": 1,
+                    "example": "Onboarding Guide for Channel Talk"
+                },
+                "title": {
+                    "type": "string",
+                    "maxLength": 1000,
+                    "minLength": 1,
+                    "example": "Welcome to Channel Talk!"
+                }
+            }
+        },
+        "articles.articleRevisionView": {
+            "type": "object",
+            "properties": {
+                "article": {
+                    "$ref": "#/definitions/dto.Article"
+                },
+                "author": {
+                    "$ref": "#/definitions/dto.Author"
+                },
+                "revision": {
+                    "$ref": "#/definitions/dto.Revision"
+                }
+            }
+        },
+        "articles.articleView": {
+            "type": "object",
+            "properties": {
+                "article": {
+                    "$ref": "#/definitions/dto.Article"
+                },
+                "articleCategory": {
+                    "$ref": "#/definitions/articles.articleCategory"
+                },
+                "author": {
+                    "$ref": "#/definitions/dto.Author"
+                },
+                "topics": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Topic"
+                    }
+                }
+            }
+        },
+        "articles.articlesListView": {
+            "type": "object",
+            "properties": {
+                "articleCategories": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/articles.articleCategory"
+                    }
+                },
+                "articles": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Article"
+                    }
+                },
+                "authors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Author"
+                    }
+                },
+                "next": {
+                    "type": "string"
+                },
+                "topics": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Topic"
+                    }
+                }
+            }
+        },
+        "articles.articlesView": {
+            "type": "object",
+            "properties": {
+                "articleCategories": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/articles.articleCategory"
+                    }
+                },
+                "articles": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Article"
+                    }
+                },
+                "authors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Author"
+                    }
+                },
+                "topics": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Topic"
+                    }
+                }
+            }
+        },
+        "articles.revisionCreateRequest": {
+            "type": "object",
+            "required": [
+                "language",
+                "name"
+            ],
+            "properties": {
+                "authorId": {
+                    "type": "string",
+                    "example": "42"
+                },
+                "body": {
+                    "type": "array",
+                    "items": {
+                        "type": "object"
+                    }
+                },
+                "bodyHtml": {
+                    "type": "string",
+                    "example": "\u003cp\u003eHello, World!\u003c/p\u003e"
+                },
+                "language": {
+                    "type": "string",
+                    "example": "ko"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 1,
+                    "example": "My Article"
+                },
+                "subtitle": {
+                    "type": "string",
+                    "maxLength": 1000,
+                    "minLength": 1,
+                    "example": "Onboarding Guide for Channel Talk"
+                },
+                "title": {
+                    "type": "string",
+                    "maxLength": 1000,
+                    "minLength": 1,
+                    "example": "Welcome to Channel Talk!"
+                }
+            }
+        },
+        "articles.revisionSaveRequest": {
+            "type": "object",
+            "properties": {
+                "authorId": {
+                    "type": "string",
+                    "example": "42"
+                },
+                "body": {
+                    "type": "array",
+                    "items": {
+                        "type": "object"
+                    }
+                },
+                "bodyHtml": {
+                    "type": "string",
+                    "example": "\u003cp\u003eHello, World!\u003c/p\u003e"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "My Article"
+                },
+                "subtitle": {
+                    "type": "string",
+                    "example": "Onboarding Guide for Channel Talk"
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Welcome to Channel Talk!"
+                }
+            }
+        },
+        "articles.revisionView": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "$ref": "#/definitions/dto.Author"
+                },
+                "revision": {
+                    "$ref": "#/definitions/dto.Revision"
+                }
+            }
+        },
+        "articles.revisionsListView": {
+            "type": "object",
+            "properties": {
+                "authors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Author"
+                    }
+                },
+                "next": {
+                    "type": "string"
+                },
+                "revisions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Revision"
+                    }
+                }
+            }
+        },
+        "authors.authorView": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "$ref": "#/definitions/dto.Author"
+                }
+            }
+        },
+        "authors.authorsListView": {
+            "type": "object",
+            "properties": {
+                "authors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Author"
+                    }
+                },
+                "next": {
+                    "type": "string"
+                }
+            }
+        },
+        "authors.authorsView": {
+            "type": "object",
+            "properties": {
+                "authors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Author"
+                    }
+                }
+            }
+        },
+        "categories.categoriesView": {
+            "type": "object",
+            "properties": {
+                "categories": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Category"
+                    }
+                }
+            }
+        },
+        "categories.categoryView": {
+            "type": "object",
+            "properties": {
+                "category": {
+                    "$ref": "#/definitions/dto.Category"
+                }
+            }
+        },
+        "dto.Article": {
+            "type": "object",
+            "properties": {
+                "authorId": {
+                    "description": "authorId is the identifier of the author of the article.",
+                    "type": "string",
+                    "example": "1"
+                },
+                "body": {
+                    "description": "body is the block-formatted content of this article."
+                },
+                "bodyHtml": {
+                    "description": "bodyHtml is the HTML-formatted content of this article.",
+                    "type": "string",
+                    "example": "\u003cp\u003e채널톡을 처음 시작할 때 필요한 세팅 과정을 모두 알려드려요.\u003c/p\u003e"
+                },
+                "coverImageUrl": {
+                    "description": "coverImageUrl is the URL of the cover image of the article.",
+                    "type": "string",
+                    "example": "https://cf.channel.io/path/to/image.png"
+                },
+                "createdAt": {
+                    "description": "createdAt is the timestamp when the revision of the article in the requested language was created in epoch milliseconds.",
+                    "type": "integer",
+                    "example": 1704067200000
+                },
+                "currentRevisionId": {
+                    "description": "currentRevisionId is the identifier of the current revision of the article in the requested language.\nAn article could contain multiple revisions in a single language, but only one of them is considered as the \"current\" revision.\n- If there is a published revision, the current revision is the published revision.\n- If there are unpublished revisions, the current revision is the one with the latest updatedAt timestamp.\n- If there are only draft revisions, the current revision is the one with the latest updatedAt timestamp.",
+                    "type": "string",
+                    "example": "1"
+                },
+                "id": {
+                    "description": "id is the unique identifier of the article.\nHowever, an article has multiple revisions (versions) and there could be a published (a.k.a. live) version for each\nlanguage. (id, language) could work as a key for identifying a live content.",
+                    "type": "string",
+                    "example": "1"
+                },
+                "name": {
+                    "description": "name is the name of the current revision of the article in the requested language.",
+                    "type": "string",
+                    "example": "한국어20240701_0000"
+                },
+                "publishedAt": {
+                    "description": "publishedAt is the timestamp when the article was published in epoch milliseconds.\nThis timestamp is only available when the article is published.\npublishedAt could be updated when a new revision is published, but it can be configured manually by the user.",
+                    "type": "integer",
+                    "example": 1704067200000
+                },
+                "publishedRevisionId": {
+                    "description": "publishedRevisionId is the identifier of the published (live) revision of the article in the requested language.\nIf the article is not published, this field is empty.",
+                    "type": "string",
+                    "example": "1"
+                },
+                "slug": {
+                    "description": "slug is the unique key of the article within the space, which can be used in the URL.",
+                    "type": "string",
+                    "example": "192a233f"
+                },
+                "spaceId": {
+                    "description": "spaceId is the unique identifier of the space that the article belongs to.",
+                    "type": "string",
+                    "example": "1"
+                },
+                "state": {
+                    "description": "state is the current state of the current revision of the article in the requested language.\n- \"draft\": the article can be edited and is not visible to the public.\n- \"published\": the article is visible to the public and cannot be edited.\n- \"unpublished\": the article is not visible to the public and cannot be edited.",
+                    "type": "string",
+                    "example": "published"
+                },
+                "subtitle": {
+                    "description": "subtitle is the subtitle of this article.",
+                    "type": "string",
+                    "example": "채널톡을 처음 시작할 때 필요한 세팅 과정을 모두 알려드려요."
+                },
+                "summary": {
+                    "description": "summary is the plaintext summary of this article.",
+                    "type": "string",
+                    "example": "채널톡을 처음 시작할 때 필요한 세팅 과정을 모두 알려드려요."
+                },
+                "title": {
+                    "description": "title is the title of this article.",
+                    "type": "string",
+                    "example": "사용 가이드"
+                },
+                "topicIds": {
+                    "description": "topicIds is the list of ids of the topics that the article is associated with.",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "1",
+                        "2",
+                        "3"
+                    ]
+                },
+                "updatedAt": {
+                    "description": "updatedAt is the timestamp when the revision of the article in the requested language was last updated in epoch milliseconds.",
+                    "type": "integer",
+                    "example": 1704067200000
+                },
+                "website": {
+                    "description": "website is metadata for the article's published website.",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/dto.ArticleWebsite"
+                        }
+                    ]
+                }
+            }
+        },
+        "dto.ArticleWebsite": {
+            "type": "object",
+            "properties": {
+                "url": {
+                    "description": "url is the URL of the article in the published website.",
+                    "type": "string",
+                    "example": "https://docs.channel.io/help/article/192a233f"
+                }
+            }
+        },
+        "dto.Author": {
+            "type": "object",
+            "properties": {
+                "avatarUrl": {
+                    "description": "avatarUrl is the URL for the author's profile image.",
+                    "type": "string",
+                    "example": "https://cf.channel.io/path/to/image.png"
+                },
+                "createdAt": {
+                    "description": "createdAt is the timestamp when the author was created in epoch milliseconds.",
+                    "type": "integer",
+                    "example": 1704067200000
+                },
+                "id": {
+                    "description": "id is the unique identifier of the author.",
+                    "type": "string",
+                    "example": "1"
+                },
+                "profile": {
+                    "description": "profile is the map of localized profiles of the author.",
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/dto.AuthorProfile"
+                    }
+                },
+                "spaceId": {
+                    "description": "spaceId is the unique identifier of the space that the author belongs to.",
+                    "type": "string",
+                    "example": "1"
+                },
+                "updatedAt": {
+                    "description": "updatedAt is the timestamp when the author was last updated in epoch milliseconds.",
+                    "type": "integer",
+                    "example": 1704067200000
+                }
+            }
+        },
+        "dto.AuthorProfile": {
+            "type": "object",
+            "properties": {
+                "bio": {
+                    "description": "bio is the short description of the author.",
+                    "type": "string",
+                    "example": "Channel Talk is all-in-one live chat messenger for businesses."
+                },
+                "name": {
+                    "description": "name is the display name of the author.",
+                    "type": "string",
+                    "example": "Channel Talk"
+                }
+            }
+        },
+        "dto.Category": {
+            "type": "object",
+            "properties": {
+                "coverImageUrl": {
+                    "description": "coverImageUrl is the map of cover image URLs for each language.",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "example": {
+                        "en": "https://cf.channel.io/path/to/image-en.png",
+                        "ko": "https://cf.channel.io/path/to/image-ko.png"
+                    }
+                },
+                "createdAt": {
+                    "description": "createdAt is the timestamp when the category was created in epoch milliseconds.",
+                    "type": "integer",
+                    "example": 1704067200000
+                },
+                "description": {
+                    "description": "description is the map of localized descriptions of the category.",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "example": {
+                        "en": "Category for frequently asked questions.",
+                        "ko": "자주 묻는 질문을 모아둔 카테고리입니다."
+                    }
+                },
+                "id": {
+                    "description": "id is the unique identifier of the category.",
+                    "type": "string",
+                    "example": "1"
+                },
+                "name": {
+                    "description": "name is the map of localized names of the category.",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "example": {
+                        "en": "FAQ",
+                        "ko": "자주 묻는 질문"
+                    }
+                },
+                "publishState": {
+                    "description": "publishState is the setting whether the category is open to public for each language. \"published\" categories are open to public, while \"unpublished\" categories are not.",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "example": {
+                        "en": "unpublished",
+                        "ko": "published"
+                    }
+                },
+                "slug": {
+                    "description": "slug is the unique key of the category within the space, which can be used in the URL.",
+                    "type": "string",
+                    "example": "192a233f"
+                },
+                "spaceId": {
+                    "description": "spaceId is the unique identifier of the space that the category belongs to.",
+                    "type": "string",
+                    "example": "1"
+                },
+                "updatedAt": {
+                    "description": "updatedAt is the timestamp when the category was last updated in epoch milliseconds.",
+                    "type": "integer",
+                    "example": 1704067200000
+                }
+            }
+        },
+        "dto.Language": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "example": "ko"
+                },
+                "localizedName": {
+                    "type": "string",
+                    "example": "한국어"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Korean"
+                }
+            }
+        },
+        "dto.NavNode": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "description": "createdAt is the timestamp when the navigation node was created in epoch milliseconds.",
+                    "type": "integer",
+                    "example": 1704067200000
+                },
+                "entityId": {
+                    "description": "entityId is the id of the entity that is connected to this node.\nThe root node does not have an entity connected to it.",
+                    "type": "string",
+                    "example": "1"
+                },
+                "entityType": {
+                    "description": "entityType is the type of the entity that is connected to this node.\nThe root node does not have an entity connected to it.\nIt can be one of the following:\n- category: The entity is a category.\n- article: The entity is an article.",
+                    "type": "string",
+                    "example": "category"
+                },
+                "id": {
+                    "description": "id is the unique identifier of the navigation node.",
+                    "type": "string",
+                    "example": "1"
+                },
+                "nodeType": {
+                    "description": "nodeType is the type of the navigation node. It can be one of the following:\n- root: The root node of the navigation tree. There is only one root node in a navigation tree.\n- category: A category node in the navigation tree.\n- article: An article node in the navigation tree.",
+                    "type": "string",
+                    "example": "root"
+                },
+                "parentNodeId": {
+                    "description": "parentNodeId is the id of the parent node of this node.\nroot node does not have a parent node.",
+                    "type": "string",
+                    "example": "1"
+                },
+                "rank": {
+                    "description": "rank is the order of the node within the siblings in the navigation tree.",
+                    "type": "integer",
+                    "example": 0
+                },
+                "spaceId": {
+                    "description": "spaceId is the unique identifier of the space that the navigation node belongs to.",
+                    "type": "string",
+                    "example": "1"
+                },
+                "updatedAt": {
+                    "description": "updatedAt is the timestamp when the navigation node was last updated in epoch milliseconds.",
+                    "type": "integer",
+                    "example": 1704067200000
+                }
+            }
+        },
+        "dto.Revision": {
+            "type": "object",
+            "properties": {
+                "articleId": {
+                    "description": "articleId is the identifier of the article that the revision belongs to.",
+                    "type": "string",
+                    "example": "1"
+                },
+                "authorId": {
+                    "description": "authorId is the identifier of the author of the revision.",
+                    "type": "string",
+                    "example": "1"
+                },
+                "body": {
+                    "description": "body is the block-formatted content of this revision."
+                },
+                "bodyHtml": {
+                    "description": "bodyHtml is the HTML-formatted content of this revision.",
+                    "type": "string",
+                    "example": "\u003cp\u003e채널톡을 처음 시작할 때 필요한 세팅 과정을 모두 알려드려요.\u003c/p\u003e"
+                },
+                "coverImageUrl": {
+                    "description": "coverImageUrl is the URL of the cover image of the revision.",
+                    "type": "string",
+                    "example": "https://cf.channel.io/path/to/image.png"
+                },
+                "createdAt": {
+                    "description": "createdAt is the timestamp when the revision was created in epoch milliseconds.",
+                    "type": "integer",
+                    "example": 1704067200000
+                },
+                "id": {
+                    "description": "id is the unique identifier of the revision.",
+                    "type": "string",
+                    "example": "1"
+                },
+                "language": {
+                    "description": "language is the language of the revision.",
+                    "type": "string",
+                    "example": "en"
+                },
+                "name": {
+                    "description": "name is the name of the revision.",
+                    "type": "string",
+                    "example": "한국어20240701_0000"
+                },
+                "spaceId": {
+                    "description": "spaceId is the unique identifier of the space that the revision belongs to.",
+                    "type": "string",
+                    "example": "1"
+                },
+                "state": {
+                    "description": "state is the current state of the revision.\n- \"draft\": the revision can be edited and is not visible to the public.\n- \"published\": the revision is visible to the public and cannot be edited.\n- \"unpublished\": the revision is not visible to the public and cannot be edited.",
+                    "type": "string",
+                    "example": "published"
+                },
+                "subtitle": {
+                    "description": "subtitle is the subtitle of this revision.",
+                    "type": "string",
+                    "example": "채널톡을 처음 시작할 때 필요한 세팅 과정을 모두 알려드려요."
+                },
+                "summary": {
+                    "description": "summary is the plaintext summary of this revision's content.",
+                    "type": "string",
+                    "example": "채널톡을 처음 시작할 때 필요한 세팅 과정을 모두 알려드려요."
+                },
+                "title": {
+                    "description": "title is the title of this revision.",
+                    "type": "string",
+                    "example": "사용 가이드"
+                },
+                "updatedAt": {
+                    "description": "updatedAt is the timestamp when the revision was last updated in epoch milliseconds.",
+                    "type": "integer",
+                    "example": 1704067200000
+                }
+            }
+        },
+        "dto.Space": {
+            "type": "object",
+            "properties": {
+                "avatarUrl": {
+                    "description": "avatarUrl is the URL for the space's profile image, which can be used as favicon or logo in the published website.",
+                    "type": "string",
+                    "example": "https://cf.channel.io/path/to/image.png"
+                },
+                "channelId": {
+                    "description": "channelId is the unique identifier of the channel that the space belongs to.",
+                    "type": "string",
+                    "example": "1"
+                },
+                "createdAt": {
+                    "description": "createdAt is the timestamp when the space was created in epoch milliseconds.",
+                    "type": "integer",
+                    "example": 1704067200000
+                },
+                "defaultLanguage": {
+                    "description": "defaultLanguage is the default language of the space.",
+                    "type": "string",
+                    "example": "ko"
+                },
+                "id": {
+                    "description": "id is the unique identifier of the space.",
+                    "type": "string",
+                    "example": "1"
+                },
+                "name": {
+                    "description": "name is the map of localized names of the space.",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "example": {
+                        "en": "User Guide",
+                        "ko": "사용 가이드"
+                    }
+                },
+                "publishState": {
+                    "description": "publishState determines whether the space is open to public. \"published\" spaces are open to public, while \"unpublished\" spaces are not.",
+                    "type": "string",
+                    "enum": [
+                        "published",
+                        "unpublished"
+                    ],
+                    "example": "published"
+                },
+                "supportedLanguages": {
+                    "description": "supportLanguages is the list of supported languages of the space.",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "ko",
+                        "en"
+                    ]
+                },
+                "updatedAt": {
+                    "description": "updatedAt is the timestamp when the space was last updated in epoch milliseconds.",
+                    "type": "integer",
+                    "example": 1704067200000
+                },
+                "website": {
+                    "description": "website is metadata for the space's published website.",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/dto.SpaceWebsite"
+                        }
+                    ]
+                }
+            }
+        },
+        "dto.SpaceWebsite": {
+            "type": "object",
+            "properties": {
+                "url": {
+                    "description": "url is the home URL of the space's published website.",
+                    "type": "string",
+                    "example": "https://docs.channel.io/help"
+                }
+            }
+        },
+        "dto.Topic": {
+            "type": "object",
+            "properties": {
+                "coverImageUrl": {
+                    "description": "coverImageUrl is the map of localized cover image URLs of the topic for each language.",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "example": {
+                        "en": "https://cf.channel.io/path/to/image-en.png",
+                        "ko": "https://cf.channel.io/path/to/image-ko.png"
+                    }
+                },
+                "createdAt": {
+                    "description": "createdAt is the timestamp when the topic was created in epoch milliseconds.",
+                    "type": "integer",
+                    "example": 1704067200000
+                },
+                "description": {
+                    "description": "description is the map of localized descriptions of the topic.",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "example": {
+                        "en": "Your Knowledge Base in One Place",
+                        "ko": "사용 가이드 개발자 문서 블로그까지 도큐먼트 하나면 끝"
+                    }
+                },
+                "id": {
+                    "description": "id is the unique identifier of the topic.",
+                    "type": "string",
+                    "example": "1"
+                },
+                "name": {
+                    "description": "name is the map of localized names of the topic.",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "example": {
+                        "en": "Documents",
+                        "ko": "도큐먼트"
+                    }
+                },
+                "spaceId": {
+                    "description": "spaceId is the unique identifier of the space that the topic belongs to.",
+                    "type": "string",
+                    "example": "1"
+                },
+                "updatedAt": {
+                    "description": "updatedAt is the timestamp when the topic was last updated in epoch milliseconds.",
+                    "type": "integer",
+                    "example": 1704067200000
+                }
+            }
+        },
+        "languages.languagesView": {
+            "type": "object",
+            "properties": {
+                "languages": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Language"
+                    }
+                }
+            }
+        },
+        "navnodes.navNodesAllView": {
+            "type": "object",
+            "properties": {
+                "navNodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.NavNode"
+                    }
+                }
+            }
+        },
+        "navnodes.navNodesLevelView": {
+            "type": "object",
+            "properties": {
+                "articles": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Article"
+                    }
+                },
+                "categories": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Category"
+                    }
+                },
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.NavNode"
+                    }
+                },
+                "navNode": {
+                    "$ref": "#/definitions/dto.NavNode"
+                }
+            }
+        },
+        "navnodes.navNodesPathView": {
+            "type": "object",
+            "properties": {
+                "articles": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Article"
+                    }
+                },
+                "categories": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Category"
+                    }
+                },
+                "navNodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.NavNode"
+                    }
+                }
+            }
+        },
+        "spaces.spaceView": {
+            "type": "object",
+            "properties": {
+                "space": {
+                    "$ref": "#/definitions/dto.Space"
+                }
+            }
+        },
+        "topics.topicView": {
+            "type": "object",
+            "properties": {
+                "topic": {
+                    "$ref": "#/definitions/dto.Topic"
+                }
+            }
+        },
+        "topics.topicsListView": {
+            "type": "object",
+            "properties": {
+                "next": {
+                    "type": "string"
+                },
+                "topics": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Topic"
+                    }
+                }
+            }
+        },
+        "topics.topicsSearchView": {
+            "type": "object",
+            "properties": {
+                "topics": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Topic"
+                    }
+                }
+            }
+        },
+        "topics.topicsView": {
+            "type": "object",
+            "properties": {
+                "topics": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Topic"
+                    }
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "APIKey": {
+            "type": "basic"
+        }
+    }
+}
