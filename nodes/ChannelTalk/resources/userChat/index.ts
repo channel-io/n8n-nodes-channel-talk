@@ -1,4 +1,4 @@
-import type { INodeProperties } from 'n8n-workflow';
+import type { INodeProperties, IDataObject } from 'n8n-workflow';
 import { userChatCreateByUserIdDescription } from './createByUserId';
 import { userChatListByUserIdDescription } from './listByUserId';
 import { userChatOpenDescription } from './open';
@@ -126,6 +126,55 @@ export const userChatDescription: INodeProperties[] = [
 					request: {
 						method: 'GET',
 						url: '=/open/v5/user-chats/{{$parameter.userChatId}}/meets/{{$parameter.messageId}}/messages',
+					},
+					output: {
+						postReceive: [
+							async function (this, items, responseData) {
+								const returnAll = this.getNodeParameter('returnAll') as boolean;
+								if (!returnAll) return items;
+
+								const body = responseData.body as {
+									messages?: unknown[];
+									next?: string;
+									[key: string]: unknown;
+								};
+
+								const allMessages: unknown[] = [...(body.messages ?? [])];
+								let nextCursor = body.next;
+
+								const userChatId = this.getNodeParameter('userChatId') as string;
+								const messageId = this.getNodeParameter('messageId') as string;
+								const sortOrder = this.getNodeParameter('sortOrder') as string;
+								const baseUrl = `https://api.channel.io/open/v5/user-chats/${userChatId}/meets/${messageId}/messages`;
+
+								while (nextCursor) {
+									const nextResponse = (await this.helpers.httpRequestWithAuthentication.call(
+										this,
+										'channelTalkApi',
+										{
+											method: 'GET',
+											url: baseUrl,
+											qs: {
+												sortOrder,
+												since: nextCursor,
+											},
+											json: true,
+										},
+									)) as {
+										messages?: unknown[];
+										next?: string;
+										[key: string]: unknown;
+									};
+
+									allMessages.push(...(nextResponse.messages ?? []));
+									nextCursor = nextResponse.next;
+								}
+
+								return allMessages.map((message) => ({
+									json: message as IDataObject,
+								}));
+							},
+						],
 					},
 				},
 			},
