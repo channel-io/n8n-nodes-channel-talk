@@ -50,26 +50,13 @@ export const userChatGetMeetsMessagesDescription: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Return All',
-		name: 'returnAll',
-		type: 'boolean',
-		default: false,
-		displayOptions: {
-			show: showOnlyForUserChatGetMeetsMessages,
-		},
-		description: 'Whether to return all results or only up to a given limit',
-	},
-	{
 		displayName: 'Additional Options',
 		name: 'additionalOptions',
 		type: 'collection',
 		placeholder: 'Add option',
 		default: {},
 		displayOptions: {
-			show: {
-				...showOnlyForUserChatGetMeetsMessages,
-				returnAll: [false],
-			},
+			show: showOnlyForUserChatGetMeetsMessages,
 		},
 		options: [
 			{
