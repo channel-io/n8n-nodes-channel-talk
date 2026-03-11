@@ -55,6 +55,7 @@
 		],
 		"nodes": [
 			"dist/nodes/ChannelTalk/ChannelTalk.node.js",
+			"dist/nodes/ChannelTalk/ChannelTalkDocuments.node.js",
 			"dist/nodes/ChannelTalk/ChannelTalkTrigger.node.js"
 		]
 	},
